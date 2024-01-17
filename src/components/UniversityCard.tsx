@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card"
 const UniversityCard = () => {
   return (
-    <Card className="hover:cursor-pointer hover:bg-slate-100 hover:border-slate-950">
+    <Card className="hover:cursor-pointer hover:bg-slate-100 hover:border-slate-300 dark:hover:border-slate-700">
       <CardHeader>
         <CardTitle>FPT University</CardTitle>
         <CardDescription>Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh</CardDescription>
