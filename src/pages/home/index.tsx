@@ -1,14 +1,10 @@
-import React from 'react'
-import { Button } from "@/components/ui/button"
-import UniversityCard from '@/components/UniversityCard'
-import { QuickSelect } from '@/components/QuickSelect'
-import { Separator } from '@/components/ui/separator'
-import { Checkbox } from '@radix-ui/react-checkbox'
 import { CheckboxLabel } from '@/components/CheckboxLabel'
+import { QuickSelect } from '@/components/QuickSelect'
 import SearchBar from '@/components/SearchBar'
 import SortBy from '@/components/SortBy'
+import UniversityCard from '@/components/UniversityCard'
 import { Input } from '@/components/ui/input'
-import { InputIcon } from '@radix-ui/react-icons'
+import { Separator } from '@/components/ui/separator'
 const Home = () => {
   const style = {
     filterGroup: "flex flex-col gap-1 font-semibold",
