@@ -1,9 +1,8 @@
 import { Route, Routes } from "react-router-dom"
 import RequiredAuth from "../components/RequiredAuth"
-import Missing from "../pages/missing"
-import Home from "../pages/home"
-import Unauthorized from "../components/Unauthorized"
 import Layout from "../layouts/Layout"
+import Home from "../pages/home"
+import Missing from "../pages/missing"
 
 function App() {
 

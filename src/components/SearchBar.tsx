@@ -1,8 +1,6 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
 
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 
 type SearchBarProps = {
   placeholder?: string
