@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { CheckboxLabel } from "@/components/CheckboxLabel";
+import { CheckboxLabel } from "@/components/common/CheckboxLabel";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

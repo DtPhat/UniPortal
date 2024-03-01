@@ -15,7 +15,7 @@ type SortByProps = {
 }
 
 
-const SortBy = ({ title, options, label }: SortByProps) => {
+const SortBy = ({ title, options, label}: SortByProps) => {
   return (
     <div className='max-w-36 w-full'>
       <Select>

@@ -1,14 +1,21 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import Stars5 from "./Stars5";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import ExpandableArea from "./ExpandableArea";
 import LinkText from "./LinkText";
 import { Bookmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const SchoolCard = () => {
+interface InstitutionCard {
+  id: number,
+  name: string,
+  code: string,
+  image?: string,
+}
+
+const InstitutionCard = ({name, code, image} : InstitutionCard) => {
   const [tabs, setTabs] = useState<"introduction" | "admission" | "contact">(
     "introduction"
   );
@@ -28,21 +35,21 @@ const SchoolCard = () => {
 
   const navigate = useNavigate();
   return (
-    <Card className="bg-slate-50">
+    <Card className="bg-slate-50/50">
       <div className="flex justify-between h-[7.5rem]">
         <div className="p-4 flex gap-4 ">
           <img
-            src="/logo/fpt.jpg"
+            src={image}
             alt=""
-            className="rounded w-24 h-24 border-2 object-contain"
+            className="rounded w-24 h-24 border-2 object-fill"
           />
           <div className="flex flex-col gap-1">
             <LinkText navigateTo="/school/fpt" style="text-lg">
-              Trường đại học FPT
+              {name}
             </LinkText>
             {/* <Stars5 rating={3.2} /> */}
             <div className="text-black/70 text-base font-semibold">
-              Code: <span className="">FPTU</span>
+              Code: <span className="">{code}</span>
             </div>
             <button className="flex items-center text-base gap-1 group text-gray-500 pt-2">
               <Bookmark
@@ -94,9 +101,9 @@ const SchoolCard = () => {
         </button>
       </div>
       <CardContent className="py-2 pb-4 px-8 ">
-        <p className="">
+        <div className="">
           <ExpandableArea text={description} limit={300} />
-        </p>
+        </div>
         {/* {tabs === 'introduction' && (
       <p className=''>
       <ExpandableArea
@@ -127,4 +134,4 @@ const SchoolCard = () => {
   );
 };
 
-export default SchoolCard;
+export default InstitutionCard;

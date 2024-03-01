@@ -1,28 +1,40 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { CheckboxLabel } from "@/components/CheckboxLabel";
+import { Link, useNavigate } from "react-router-dom";
+import { CheckboxLabel } from "@/components/common/CheckboxLabel";
+import { useLoginMutation } from "@/app/services/users";
+import { useAppDispatch } from "@/app/hooks";
+import { setCredentials } from "@/features/auth/authSlice";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const [login, { isLoading }] = useLoginMutation()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      // const userData = await login({ email, password }).unwrap();
+      // dispatch(setCredentials({ ...userData }));
+      navigate('/admin/users');
+    } catch (error) {
+      console.log(error)
+    }
     console.log("Email:", email, "Password:", password);
   };
 
   return (
     <div className="shadow-md">
       <section className="grid grid-cols-2">
-        <div className="bg-gradient-to-b rounded-r from-black/90 via-gray-500 to-gray-200 text-white font-semibold justify-center text-center">
+        <div className="bg-gradient-to-b rounded-l from-black/90 via-gray-500 to-gray-200 text-white font-semibold justify-center text-center">
           <img className=" pt-12 h-auto" src="https://bcp.cdnchinhphu.vn/334894974524682240/2022/12/5/dhbkhn-6920-1658994052-1-16702134834751920701721.jpg"></img>
         </div>
         <form className="flex flex-col items-center justify-center p-4">
           <div className="text-center mb-4">
             <h1 className="text-2xl font-semibold mb-4">SIGN IN</h1>
             <h2 className="text-lg font-semibold text-black/50">
-              Welcome back you're been missed!
+              Welcome back you've been missed!
             </h2>
           </div>
           <div className="w-full max-w-md flex flex-col">

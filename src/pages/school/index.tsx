@@ -1,4 +1,3 @@
-import Stars5 from "@/components/Stars5"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/navigation-tabs"
 import { Bookmark } from "lucide-react"
 import {
@@ -42,42 +41,23 @@ Tỉ lệ việc làm của trường cũng đạt được con số ấn tượ
         <Tabs defaultValue="details" className="pb-4">
           <TabsList className="flex gap-2">
             <TabsTrigger value="details">School details</TabsTrigger>
-            <TabsTrigger value="methods">Admission methods</TabsTrigger>
             <TabsTrigger value="programs">Programs of study</TabsTrigger>
+            <TabsTrigger value="methods">Admission methods</TabsTrigger>
           </TabsList>
           <TabsContent value="details">
             <Accordion type="multiple" defaultValue={["introduction", "contact"]}>
               <AccordionItem value="introduction">
                 <AccordionTrigger className="text-lg">Introduction</AccordionTrigger>
                 <AccordionContent className="">
-                  <div className="whitespace-pre-wrap">
+                  <div className="whitespace-pre-wrap text-base">
                     {schoolIntroduction}
                   </div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="contact">
                 <AccordionTrigger className="text-lg">Contact</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4">
+                <AccordionContent className="flex flex-col gap-4 text-base">
                   <div>
-                    <h1 className="text-lg pb-1">Ha Noi</h1>
-                    <p>Phone: <span className="font-semibold">+84 24 7300 1866</span></p>
-                    <p>Email: <span className="font-semibold">daihocfpt@fpt.edu.vn</span></p>
-                    <p>Phone: <span className="font-semibold">Education Zone, Hoa Lac Hi-tech Park, Km29, Thang Long Boulevard, Thach Hoa, Thach That, Ha Noi, Vietnam</span></p>
-                  </div>
-                  <div>
-                    <h1 className="text-lg pb-1">Ho Chi Minh </h1>
-                    <p>Phone: <span className="font-semibold">+84 24 7300 1866</span></p>
-                    <p>Email: <span className="font-semibold">daihocfpt@fpt.edu.vn</span></p>
-                    <p>Phone: <span className="font-semibold">Education Zone, Hoa Lac Hi-tech Park, Km29, Thang Long Boulevard, Thach Hoa, Thach That, Ha Noi, Vietnam</span></p>
-                  </div>
-                  <div>
-                    <h1 className="text-lg pb-1">Da Nang</h1>
-                    <p>Phone: <span className="font-semibold">+84 24 7300 1866</span></p>
-                    <p>Email: <span className="font-semibold">daihocfpt@fpt.edu.vn</span></p>
-                    <p>Phone: <span className="font-semibold">Education Zone, Hoa Lac Hi-tech Park, Km29, Thang Long Boulevard, Thach Hoa, Thach That, Ha Noi, Vietnam</span></p>
-                  </div>
-                  <div>
-                    <h1 className="text-lg pb-1">Quy Nhon</h1>
                     <p>Phone: <span className="font-semibold">+84 24 7300 1866</span></p>
                     <p>Email: <span className="font-semibold">daihocfpt@fpt.edu.vn</span></p>
                     <p>Phone: <span className="font-semibold">Education Zone, Hoa Lac Hi-tech Park, Km29, Thang Long Boulevard, Thach Hoa, Thach That, Ha Noi, Vietnam</span></p>

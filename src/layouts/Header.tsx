@@ -26,7 +26,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useGetUserDetailsQuery } from "@/services/authService";
 import { logout, setCredentials } from "../features/auth/authSlice";
 
 type Props = {
@@ -52,12 +51,9 @@ const Header = ({ isSchoolPage }: Props) => {
   const navigate = useNavigate();
   const { userInfo } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { data, isFetching } = useGetUserDetailsQuery({});
   const [openSchool, setOpenSchool] = useState(false);
   const [value, setValue] = useState("fpt");
-  useEffect(() => {
-    if (data) dispatch(setCredentials(data));
-  }, [data, dispatch]);
+console.log(userInfo)
   return (
     <section className="border-b-2 flex justify-center px-1 sticky top-0 z-10 bg-white">
       <div className="max-w-7xl w-full flex justify-center items-center">
@@ -132,6 +128,11 @@ const Header = ({ isSchoolPage }: Props) => {
                       <li className="font-semibold text-gray-700 hover:text-sky-700 pt-2">
                         <Link to='/admission'>
                           Tổng hợp về các phương thức xét tuyển
+                        </Link>
+                      </li>
+                      <li className="font-semibold text-gray-700 hover:text-sky-700 pt-2">
+                        <Link to='/admission/subject-group'>
+                          Danh sách các khối thi và tổ hợp xét tuyển đại học
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-sky-700 pt-2">

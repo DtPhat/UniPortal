@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { QuickSelect } from "@/components/QuickSelect";
+import { QuickSelect } from "@/components/common/QuickSelect";
 import { Button } from "@/components/ui/button";
 const Ranking = () => {
   const [name, setName] = useState("");
@@ -11,10 +11,9 @@ const Ranking = () => {
     e.preventDefault();
     console.log("Name:", name, "Place", place, "Email:", email);
   };
-
   return (
     <div className="shadow-md my-4 border-2 rounded-lg overflow-hidden ">
-      <form className="flex flex-col items-center text-black justify-center p-4 shadow-md bg-gray-50">
+      <form className="flex flex-col items-center text-black justify-center p-4 shadow-md bg-slate-50/50">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold mb-2">SCHOOLRANK </h1>
           <h2 className="text-xl font-bold mb-3">

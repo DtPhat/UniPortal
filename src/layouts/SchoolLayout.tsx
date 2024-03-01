@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom"
 import Header from "./Header"
 
 const SchoolLayout = () => {
-    console.log('is using layout')
     return (
         <main>
             <Header isSchoolPage={true} />
