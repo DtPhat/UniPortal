@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -16,7 +18,7 @@ module.exports = {
         "2xl": "1400px",
       },
     },
-    
+
     extend: {
       keyframes: {
         "accordion-down": {
@@ -32,7 +34,15 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      colors: {
+        accent: {
+          DEFAULT: colors.sky["700"],
+          light: colors.sky["300"],
+          dark: colors.sky["900"]
+        },
+      }
     },
+
   },
   plugins: [require("tailwindcss-animate")],
 }

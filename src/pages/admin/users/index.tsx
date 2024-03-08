@@ -6,20 +6,35 @@ import { columns } from "./columns";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@/components/common/Pagination";
 import { useGetAccountsQuery } from "@/app/services/users";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import SearchBar from "@/components/common/SearchBar";
+import OrderButton from "@/components/common/OrderToggle";
+import { debounce } from 'lodash'
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 
 export const UserTable = () => {
-
-
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const { data, isLoading } = useGetAccountsQuery()
-  const accountList = data?.accounts
+  const [asc, setAsc] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const { data, isLoading } = useGetAccountsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
+  const accountList = data?.accounts || []
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const toggleOrder = () => {
+    setAsc(prevState => !prevState)
+  }
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+  const debouncedSearch = debounce((debouncedSearchTerm: string) => {
+    setSearchTerm(debouncedSearchTerm);
+    setPage(1)
+  }, 1000);
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(event.target.value);
+  };
+
   useEffect(() => {
     setTotalPage(data?.totalPages || 1)
   }, [data]);
@@ -27,6 +42,13 @@ export const UserTable = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col py-4 gap-4">
+      <Breadcrumbs
+        parents={[{
+          label: "Dashboard",
+          url: "/admin"
+        }]}
+        currentPage="Users"
+      />
       <div className="flex items-start justify-between">
         <h1 className="text-3xl font-bold">Manage Accounts</h1>
         <Button
@@ -37,7 +59,11 @@ export const UserTable = () => {
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="email" columns={columns} data={accountList || []} />
+      <div className='flex gap-2 items-center w-1/2'>
+        <SearchBar placeholder='Search school...' searchTerm={searchTerm} handleChange={handleSearch} />
+        <OrderButton asc={asc} toggleOrder={toggleOrder} />
+      </div>
+      <DataTable searchKey="email" columns={columns} data={accountList} />
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>
   );

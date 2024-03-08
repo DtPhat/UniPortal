@@ -9,7 +9,7 @@ type Props = {
 const LinkText = ({ children, navigateTo, style }: Props) => {
   return (
     <Link to={navigateTo}>
-      <p className={`hover:text-sky-700 dark:hover:text-sky-300 font-semibold ${style}`}>
+      <p className={`hover:text-accent dark:hover:text-sky-300 font-semibold ${style}`}>
         {children}
       </p>
     </Link>

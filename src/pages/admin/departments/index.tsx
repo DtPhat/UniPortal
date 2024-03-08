@@ -1,27 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
-import { User } from "@/constants/data";
 import { Plus } from "lucide-react";
 import { columns } from "./columns";
 import { useNavigate } from "react-router-dom";
-import { users } from "@/constants/data";
 import Pagination from "@/components/common/Pagination";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useGetDepartmentsQuery } from "@/app/services/majors";
+import { debounce } from "lodash";
+import OrderButton from "@/components/common/OrderToggle";
+import SearchBar from "@/components/common/SearchBar";
 
 
 export const DepartmentTable = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const { data, isLoading } = useGetDepartmentsQuery({ page: page, sort: "ASC"})
-  const departments = data?.departments || []
+  const [asc, setAsc] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const { data, isLoading } = useGetDepartmentsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const departments = data?.departments || []
+  console.log("Hello")
+  const toggleOrder = () => {
+    setAsc(prevState => !prevState)
+  }
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+  const debouncedSearch = debounce((debouncedSearchTerm: string) => {
+    setSearchTerm(debouncedSearchTerm);
+    setPage(1)
+  }, 1000);
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(event.target.value);
+  };
+
   useEffect(() => {
-    setTotalPage(data?.totalPage || 1)
+    setTotalPage(data?.totalPages || 1)
   }, [data]);
 
   const navigate = useNavigate();
@@ -37,6 +52,10 @@ export const DepartmentTable = () => {
         </Button>
       </div>
       <Separator />
+      <div className='flex gap-2 items-center w-1/2'>
+        <SearchBar placeholder='Search departments...' searchTerm={searchTerm} handleChange={handleSearch} />
+        <OrderButton asc={asc} toggleOrder={toggleOrder} />
+      </div>
       <DataTable searchKey="name" columns={columns} data={departments} />
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>

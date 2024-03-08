@@ -23,7 +23,7 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
     cardHover:
       "hover:cursor-pointer hover:bg-slate-100 hover:border-slate-300 dark:hover:border-slate-700 w-full",
     tabs: `py-1 gap-4 px-8 text-lg text-slate-500 hover:text-slate-900 `,
-    chosenTabs: "text-slate-900 border-b-2 border-sky-700 font-semibold",
+    chosenTabs: "text-slate-900 border-b-2 border-accent font-semibold",
   };
   const description =
     "Trường Đại học FPT - trường đào tạo và cung cấp nguồn nhân lực chất lượng cao thuộc ngành Công nghệ thông tin (Chuyên ngành Kỹ thuật phần mềm, An toàn thông tin, Thiết kế Mỹ thuật số), Quản trị kinh doanh (Chuyên ngành Quản trị kinh doanh, Kinh doanh quốc tế, Quản trị du lịch và lữ hành, Quản trị Khách sạn, Truyền thông đa phương tiện), Ngôn ngữ Anh, Ngôn ngữ Hàn, Ngôn ngữa Nhật cho các doanh nghiệp trong nước, các tập đoàn nước ngoài và doanh nghiệp khởi sự từ sinh viên Đại học FPT.";
@@ -54,9 +54,9 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
             <button className="flex items-center text-base gap-1 group text-gray-500 pt-2">
               <Bookmark
                 size={18}
-                className="group-hover:fill-sky-700 text-sky-700"
+                className="group-hover:fill-accent text-accent"
               />
-              <span className="group-hover:text-sky-700 group-hover:font-semibold">
+              <span className="group-hover:text-accent group-hover:font-semibold">
                 Add to My List
               </span>
             </button>

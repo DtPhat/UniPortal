@@ -1,7 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
-import { User } from "@/constants/data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Major } from "@/app/types";
 
@@ -26,28 +25,12 @@ export const columns: ColumnDef<Major>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "major",
-    header: "MAJOR",
+    accessorKey: "name",
+    header: "NAME",
   },
   {
-    accessorKey: "majorCode",
-    header: "MAJOR CODE",
-  },
-  {
-    accessorKey: "department",
-    header: "MAJOR",
-  },
-  {
-    accessorKey: "departmentCode",
-    header: "DEPARTMENT CODE",
-  },
-  {
-    accessorKey: "school",
-    header: "SCHOOL",
-  },
-  {
-    accessorKey: "schoolCode",
-    header: "SCHOOL CODE",
+    accessorKey: "code",
+    header: "CODE",
   },
   {
     id: "actions",

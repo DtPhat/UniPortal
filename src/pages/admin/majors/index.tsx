@@ -1,25 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
-import { User } from "@/constants/data";
 import { Plus } from "lucide-react";
 import { columns } from "./columns";
 import { useNavigate } from "react-router-dom";
-import { users } from "@/constants/data";
 import Pagination from "@/components/common/Pagination";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useGetDepartmentsQuery, useGetMajorsQuery } from "@/app/services/majors";
+import { debounce } from "lodash";
+import SearchBar from "@/components/common/SearchBar";
+import OrderButton from "@/components/common/OrderToggle";
 
 
 export const MajorTable = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const { data, isLoading } = useGetMajorsQuery({ page: page, size: 10, sortObj:'id', order: "asc"})
+  const [asc, setAsc] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const { data, isLoading } = useGetMajorsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
   const majors = data?.majors || []
-
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  console.log("Hello")
+  const toggleOrder = () => {
+    setAsc(prevState => !prevState)
+  }
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+  const debouncedSearch = debounce((debouncedSearchTerm: string) => {
+    setSearchTerm(debouncedSearchTerm);
+    setPage(1)
+  }, 1000);
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(event.target.value);
+  };
+
   useEffect(() => {
     setTotalPage(data?.totalPages || 1)
   }, [data]);
@@ -37,6 +51,10 @@ export const MajorTable = () => {
         </Button>
       </div>
       <Separator />
+      <div className='flex gap-2 items-center w-1/2'>
+        <SearchBar placeholder='Search majors...' searchTerm={searchTerm} handleChange={handleSearch} />
+        <OrderButton asc={asc} toggleOrder={toggleOrder} />
+      </div>
       <DataTable searchKey="name" columns={columns} data={majors} />
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>

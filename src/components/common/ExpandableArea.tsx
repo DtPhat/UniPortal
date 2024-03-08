@@ -10,7 +10,7 @@ const ExpandableArea = ({ text, limit }: Props) => {
   return (
     <div>
       {showMore ? text : `${text.substring(0, limit)}...`}{' '}
-      <button className="text-sky-700 hover:opacity-80 dark:hover:text-sky-300 font-semibold" onClick={() => setShowMore(!showMore)}>
+      <button className="text-accent hover:opacity-80 dark:hover:text-sky-300 font-semibold" onClick={() => setShowMore(!showMore)}>
         {showMore ? "Show less" : "Show more"}
       </button>
     </div>

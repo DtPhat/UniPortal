@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { QuickSelect } from "@/components/common/QuickSelect";
+import { DropdownSelect } from "@/components/common/DropdownSelect";
 import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/common/Heading";
+import LinkText from "@/components/common/LinkText";
 const Ranking = () => {
   const [name, setName] = useState("");
   const [place, setPlace] = useState("");
@@ -15,11 +17,12 @@ const Ranking = () => {
     <div className="shadow-md my-4 border-2 rounded-lg overflow-hidden ">
       <form className="flex flex-col items-center text-black justify-center p-4 shadow-md bg-slate-50/50">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold mb-2">SCHOOLRANK </h1>
-          <h2 className="text-xl font-bold mb-3">
-            RANKING FOR HIGH SCHOOL STUDENT 2024
-          </h2>
+          {/* <h1 className="text-3xl font-bold mb-2"> </h1> */}
+          <Heading title="SCHOOLRANK" description="RANKING FOR HIGH SCHOOL STUDENT 2024" />
         </div>
+        <div className="w-full italic">
+          <span>Enter your infomation in below or </span>
+          <Button className="text-accent px-2" variant='ghost'>Import data from School Transcript</Button></div>
         <section className="grid grid-cols-2 gap-4 my-4 w-full">
           <div>
             <label className="font-bold">Fullname:</label>
@@ -33,7 +36,7 @@ const Ranking = () => {
           </div>
           <div>
             <label className="font-bold">Province/City:</label>
-            <QuickSelect
+            <DropdownSelect
               title="Province/City"
               options={["Ho Chi Minh", "Can Tho", "Tra Vinh", "An Giang"]}
             />

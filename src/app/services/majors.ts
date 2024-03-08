@@ -9,9 +9,8 @@ export interface PageQueryDepartmnet {
 
 export interface PageQueryMajor {
   page: number,
-  size: number,
-  sortObj?: string,
-  order?: "asc" | "desc"
+  sort: 'ASC' | 'DESC'
+  search?: string
 }
 
 interface MajorsResponse extends Pagination {
@@ -28,10 +27,10 @@ interface DepartmentsResponse extends Pagination {
 export const majorsApi = api.injectEndpoints({
   endpoints: (build) => ({
     getDepartments: build.query<DepartmentsResponse, PageQueryDepartmnet>({
-      query: ({ page = 0, sort, search }) => ({ url: `http://18.140.72.139/api/v1/majors/departments?sort=${sort}&page=${page}` }),
+      query: ({ page = 1, sort, search }) => ({ url: `/api/v1/majors/departments?search=${search || ''}&sort=${sort}&page=${page}` }),
     }),
     getMajors: build.query<MajorsResponse, PageQueryMajor>({
-      query: ({ page = 0, size, sortObj, order }) => ({ url: `http://18.140.72.139/api/v1/majors?page=${page}&size=${size}&sort=${sortObj}%2C${order}` }),
+      query: ({ page = 1, sort, search }) => ({ url: `/api/v1/majors?search=${search || ''}&sort=${sort}&page=${page}` }),
     }),
   }),
 })

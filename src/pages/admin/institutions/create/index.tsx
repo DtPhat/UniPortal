@@ -4,7 +4,6 @@ import React from 'react'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,44 +25,77 @@ import {
 import { Input } from "@/components/ui/input"
 import { DropdownSelect } from '@/components/common/DropdownSelect'
 import { register } from 'module'
-import { useRegisterMutation } from '@/app/services/users'
+import { useCreateInstitutionMutation } from '@/app/services/institution'
 import { useAppDispatch } from '@/app/hooks'
 import { roles } from '@/app/constants'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(50),
-  role: z.string({
-    required_error: "Please select a role",
-  })
+  name: z.string(),
+  code: z.string().length(3),
+  description: z.string()
 })
 
-const CreateUser = () => {
+const CreateInstitution = () => {
   const dispatch = useAppDispatch()
-  const [register, { isLoading }] = useRegisterMutation()
+  const [createInstitution, { isLoading }] = useCreateInstitutionMutation()
   const navigate = useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      name: "",
+      code: "",
+      description: ""
     },
 
   })
-  const { register: formRegister, handleSubmit } = useForm();
+  // const { register: formRegister, handleSubmit } = useForm();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-
-    const registerData = await register({
-      email: values.email,
-      password: values.password,
-      role: values.role,
-      avatarLink: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_rW9tvc5tzHfImg0xXTReFOQIAuAbt-EXuFdvzgB9g&s"
+    await createInstitution({
+      name: values.name,
+      code: values.code,
+      description: values.description,
+      "website1": {
+        "value": "string",
+        "title": "string"
+      },
+      "website2": {
+        "value": "string",
+        "title": "string"
+      },
+      "website3": {
+        "value": "string",
+        "title": "string"
+      },
+      "email1": {
+        "value": "string",
+        "title": "string"
+      },
+      "email2": {
+        "value": "string",
+        "title": "string"
+      },
+      "email3": {
+        "value": "string",
+        "title": "string"
+      },
+      "phone1": {
+        "value": "string",
+        "title": "string"
+      },
+      "phone2": {
+        "value": "string",
+        "title": "string"
+      },
+      "phone3": {
+        "value": "string",
+        "title": "string"
+      }
     }).then(() => {
-      navigate('/admin/users')
+      navigate('/admin/institutions')
     })
   }
   return (
@@ -75,14 +107,14 @@ const CreateUser = () => {
             url: "/admin"
           },
           {
-            label: "Users",
-            url: "/admin/users"
-          }
+            label: "Institutions",
+            url: "/admin/institutions "
+          },
         ]}
         currentPage="Create"
       />
       <div className="flex items-start justify-between">
-        <Heading title='Create account' description='Register a new account' />
+        <Heading title='Create an institution' description='Add a new institution' />
       </div>
       <Separator />
       <div className='flex'>
@@ -90,12 +122,12 @@ const CreateUser = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-1/2">
             <FormField
               control={form.control}
-              name="email"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="johndoe@gmail.com" {...field} />
+                    <Input placeholder="Truong Dai hoc FPT" {...field} />
                   </FormControl>
                   {/* <FormDescription>
                   This is your public display name.
@@ -106,39 +138,32 @@ const CreateUser = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="At least 8 characters" {...field} type='password' />
+                    <Input placeholder="FPT" {...field} />
                   </FormControl>
+                  {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
-              name="role"
+              name="description"
               render={({ field }) => (
-                <FormItem className='w-1/2'>
-                  <FormLabel>Role</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value={roles.STUDENT}>{roles.STUDENT}</SelectItem>
-                      <SelectItem value={roles.STAFF}>{roles.STAFF}</SelectItem>
-                      <SelectItem value={roles.ADMIN}>{roles.ADMIN}</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Mô tả trường Đại học" {...field} />
+                  </FormControl>
                   {/* <FormDescription>
-                    You can manage email addresses in your{" "}
-                  </FormDescription> */}
+                  This is your public display name.
+                </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -153,4 +178,4 @@ const CreateUser = () => {
   )
 }
 
-export default CreateUser
+export default CreateInstitution

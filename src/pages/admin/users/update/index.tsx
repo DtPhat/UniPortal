@@ -1,6 +1,6 @@
 import { Heading } from '@/components/common/Heading'
 import { Separator } from '@/components/ui/separator'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -26,42 +26,44 @@ import {
 import { Input } from "@/components/ui/input"
 import { DropdownSelect } from '@/components/common/DropdownSelect'
 import { register } from 'module'
-import { useRegisterMutation } from '@/app/services/users'
+import { useGetAccountQuery, useRegisterMutation, useUpdateAccountMutation } from '@/app/services/users'
 import { useAppDispatch } from '@/app/hooks'
-import { roles } from '@/app/constants'
-import { useNavigate } from 'react-router-dom'
+import { roles, status } from '@/app/constants'
+import { useNavigate, useParams } from 'react-router-dom'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 
-
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(50),
   role: z.string({
-    required_error: "Please select a role",
+    required_error: "Please select a role.",
+  }),
+  status: z.string({
+    required_error: "Please status status.",
   })
 })
 
-const CreateUser = () => {
+const UpdateUser = () => {
+  const { id } = useParams()
+  const [updateAccount, { isLoading }] = useUpdateAccountMutation()
   const dispatch = useAppDispatch()
-  const [register, { isLoading }] = useRegisterMutation()
   const navigate = useNavigate()
+  const { data } = useGetAccountQuery(id ?? "")
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-
   })
-  const { register: formRegister, handleSubmit } = useForm();
+  useEffect(() => {
+    if (data) {
+      form.setValue('role', data.role)
+      form.setValue('status', data.status)
+    }
+  }, [data]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-
-    const registerData = await register({
-      email: values.email,
-      password: values.password,
-      role: values.role,
-      avatarLink: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_rW9tvc5tzHfImg0xXTReFOQIAuAbt-EXuFdvzgB9g&s"
+    await updateAccount({
+      id,
+      body: {
+        role: values.role,
+        status: values.status
+      }
     }).then(() => {
       navigate('/admin/users')
     })
@@ -79,45 +81,15 @@ const CreateUser = () => {
             url: "/admin/users"
           }
         ]}
-        currentPage="Create"
+        currentPage="Update"
       />
       <div className="flex items-start justify-between">
-        <Heading title='Create account' description='Register a new account' />
+        <Heading title='Update account' description='Edit an account infomation' />
       </div>
       <Separator />
       <div className='flex'>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-1/2">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="johndoe@gmail.com" {...field} />
-                  </FormControl>
-                  {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="At least 8 characters" {...field} type='password' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="role"
@@ -144,13 +116,36 @@ const CreateUser = () => {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className='w-1/2'>
+                  <FormLabel>Status</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value={status.ACTIVE}>{status.ACTIVE}</SelectItem>
+                      <SelectItem value={status.INACTIVE}>{status.INACTIVE}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {/* <FormDescription>
+                    You can manage email addresses in your{" "}
+                  </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit">Submit</Button>
           </form>
         </Form>
       </div>
-
     </div>
   )
 }
 
-export default CreateUser
+export default UpdateUser

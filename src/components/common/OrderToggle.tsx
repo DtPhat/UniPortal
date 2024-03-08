@@ -8,7 +8,7 @@ type Props = {
 
 const OrderButton = ({ asc, toggleOrder }: Props) => {
   return (
-    <button className='text-slate-900 border p-1 rounded-md hover:bg-slate-50' onClick={toggleOrder}>
+    <button className='text-slate-900 border-2 p-1 rounded-md hover:bg-slate-50 shadow-sm focus:border-slate-800' onClick={toggleOrder}>
       {
         asc ?
           <ArrowUpNarrowWide className='w-6 h-6' />

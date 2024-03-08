@@ -1,3 +1,4 @@
+import { useDeleteInstitutionMutation } from "@/app/services/institution";
 import { Institution } from "@/app/types";
 import { AlertModal } from "@/components/common/AlertModel";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface CellActionProps {
   data: Institution;
@@ -20,8 +21,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
-  const onConfirm = async () => { };
+  const [deleteInstitution, { isLoading }] = useDeleteInstitutionMutation()
+  const onConfirm = async () => {
+    await deleteInstitution(data?.id).then(() => {
+      navigate('/admin/institutions')
+    })
+  };
 
   return (
     <>

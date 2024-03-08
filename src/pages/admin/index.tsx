@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom"
+import { Navigate} from "react-router-dom"
 
 const Admin = () => {
-  const navigate = useNavigate()
-  navigate('/admin/users')
   return (
-    <div>
-      
+    <div className="pt-4">
+      <Navigate to={'/admin/users'}/>
     </div>
   )
 }

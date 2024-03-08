@@ -11,14 +11,15 @@ export interface Account {
   firstName: string,
   lastName: string,
   role: string,
-  status: string
+  status: "ACTIVE" | "INACTIVE"
   avatarLink: string
 }
 
 export interface Institution {
   id: number,
   name: string,
-  code: string
+  code: string,
+  description: string,
 }
 
 
@@ -31,10 +32,7 @@ export interface Department {
 
 export interface Major {
   id: number,
-  major: string,
-  majorCode: string,
-  department: string,
-  departmentCode: string,
-  school: string,
-  schoolCode: string,
+  name: string,
+  code: string
+  description: string
 }

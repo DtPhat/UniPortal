@@ -27,8 +27,8 @@ Tỉ lệ việc làm của trường cũng đạt được con số ấn tượ
               Code: <span className="">FPTU</span>
             </div>
             <button className="flex items-center text-lg gap-1 group text-gray-500 pt-2">
-              <Bookmark size={24} className="group-hover:fill-sky-600 text-sky-700" />
-              <span className="group-hover:text-sky-700 group-hover:font-semibold">Add to My List</span>
+              <Bookmark size={24} className="group-hover:fill-sky-600 text-accent" />
+              <span className="group-hover:text-accent group-hover:font-semibold">Add to My List</span>
             </button>
             {/* <h2 className="text-sm">Code: FPT</h2>
             <p className="text-sm">Address: Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh</p> */}

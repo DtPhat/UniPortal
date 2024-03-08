@@ -1,3 +1,4 @@
+import { Heading } from "@/components/common/Heading";
 import {
   Accordion,
   AccordionContent,
@@ -7,6 +8,7 @@ import {
 const Admission = () => {
   return (
     <div className="p-4">
+      <Heading title="Tổng hợp các phương thức xét tuyển" description="" />
       <section className="grid">
         <Accordion type="single" collapsible className="w-full col-span-2" defaultValue="text1">
           <AccordionItem value="text1">
