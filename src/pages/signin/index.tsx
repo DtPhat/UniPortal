@@ -87,9 +87,9 @@ console.log(serverReponse)
           </div>
           <div className="flex flex-col items-center justify-center p-4">
             <div className="text-center mb-4">
-              <h1 className="text-2xl font-semibold mb-4">SIGN IN</h1>
+              <h1 className="text-2xl font-semibold mb-4">ĐĂNG NHẬP</h1>
               <h2 className="text-lg font-semibold text-black/50">
-                Chào mừng trở lại
+                Chào mừng quay trở lại!
               </h2>
             </div>
             <div className="w-full max-w-md flex flex-col">
@@ -97,6 +97,7 @@ console.log(serverReponse)
               <Input
                 type="email"
                 placeholder="John@gmail.com"
+                defaultValue={'admin@uniportal.com'}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="block w-full px-2 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-4"
@@ -105,6 +106,7 @@ console.log(serverReponse)
               <Input
                 type="password"
                 placeholder="*****"
+                defaultValue={'3c6a8c7cf641a2275b0c372052ed3945'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="block w-full px-2 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-6"
@@ -153,7 +155,7 @@ console.log(serverReponse)
                 <div className="mt-2 text-white-300">
                   Không có tài khoản
                   <Link to="/signup" className="ml-4 text-accent font-semibold">
-                    Đăng kí
+                    Đăng ký
                   </Link>
                 </div>
               </div>

@@ -13,7 +13,7 @@ import { ArrowDownNarrowWide } from 'lucide-react'
 import OrderButton from '@/components/common/OrderToggle'
 import { institutionImages } from '@/data/placeholder'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { InstitutionSkeletonCard } from '@/components/common/Skeleton'
+import { DataTableSkeleton, InstitutionSkeletonCard, SkeletonCard } from '@/components/common/Skeleton'
 import { debounce } from "lodash";
 import { useGetMajorsQuery } from '@/app/services/majors'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -58,19 +58,11 @@ const Home = () => {
             <h1 className='text-lg'>Lọc</h1>
           </div>
           <div className={style.filterWrapper}>
-            {/* <div className={style.filterGroup}>
-              <h2>Select sector</h2>
-              <DropdownSelect title='Sector' options={["All", "South", "North", "Center"]} />
-            </div> */}
-            {/* <div className={style.filterGroup}>
-              <h2>Select province</h2>
-              <DropdownSelect title='Province/City' options={["Ho Chi Minh", "Can Tho", "Tra Vinh", "An Giang"]} />
-            </div> */}
             <div className={style.filterGroup}>
-              <h2>Select province</h2>
+              <h2 className='mb-1 text-lg'>Chọn tỉnh thành</h2>
               <Select name='province' onValueChange={value => setSelectedProvince(value)}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Chọn tỉnh thành" />
+                  <SelectValue placeholder="Tỉnh thành" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -83,31 +75,14 @@ const Home = () => {
             </div>
           </div>
           <Separator orientation="horizontal" />
-          {/* <div className={style.filterWrapper}>
-            <div className={style.filterGroup}>
-              <h2>Enter admission score</h2>
-              <div className="flex flex-wrap gap-4 items-center ">
-                <div>From:</div>
-                <Input className='max-w-16 font-normal' type='number' defaultValue={0} placeholder='0' />
-                <div>to:</div>
-                <Input className='max-w-16 font-normal' type='number' defaultValue={30} placeholder='30' />
-              </div>
-            </div>
-            <div className=''>
-              <SortBy title='Year' options={["2024", "2023", "2022"]} />
-            </div>
-          </div> */}
-          <Separator orientation="horizontal" />
           <div className={style.filterWrapper}>
-            {/* <div className={style.filterGroup}>
-              <h2>Select Department</h2>
-              <DropdownSelect title='Department' options={["Information Technology", "Business Management"]} />
-            </div> */}
             <div className={style.filterGroup}>
-              <h2>Choose majors</h2>
+              <h2 className='mb-1 text-lg'>Chọn chuyên ngành</h2>
               <div className='flex flex-col gap-2 h-96 overflow-auto'>
-                {
-                  majors?.map(item =>
+                
+                { !majors?.length 
+                  ? <DataTableSkeleton />
+                  : majors?.map(item =>
                     <CheckboxLabel label={item.name} />
                   )}
               </div>

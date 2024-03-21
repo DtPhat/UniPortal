@@ -5,9 +5,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-const Admission = () => {
+import Breadcrumbs from "@/components/ui/breadcrumbs";
+const AdmissionInfo = () => {
   return (
-    <div className="p-4">
+    <div className="py-2">
+      <div className="mb-4">
+        <Breadcrumbs
+          parents={[
+            {
+              label: "Thông tin tuyển sinh",
+              url: "/admission-info"
+            },
+          ]}
+          currentPage="Tổng hợp các phương thức xét tuyển"
+        />
+      </div>
       <Heading title="Tổng hợp các phương thức xét tuyển" description="" />
       <section className="grid">
         <Accordion type="single" collapsible className="w-full col-span-2" defaultValue="text1">
@@ -135,4 +147,4 @@ const Admission = () => {
     </div>
   );
 };
-export default Admission;
+export default AdmissionInfo;

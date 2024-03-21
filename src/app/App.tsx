@@ -1,48 +1,49 @@
+import AdminLayout from "@/components/layout/AdminLayout"
+import ProtectedRoute from "@/components/layout/ProtectedRoute"
 import SchoolLayout from "@/components/layout/SchoolLayout"
+import AdminDashboard from "@/pages/admin"
+import AdmissionTable from "@/pages/admin/admissions"
+import CreateAdmissionPlan from "@/pages/admin/admissions/create"
+import AdmissionDetails from "@/pages/admin/admissions/details"
+import AdmissionMajors from "@/pages/admin/admissions/details/majors"
+import CreateAdmissionMajor from "@/pages/admin/admissions/details/majors/create"
+import UpdateAdmissionMajor from "@/pages/admin/admissions/details/majors/update"
+import AdmissionTrainingPrograms from "@/pages/admin/admissions/details/training-programs"
+import CreateAdmissionTrainingPrograms from "@/pages/admin/admissions/details/training-programs/create"
+import UpdateAdmissionTraningPrograms from "@/pages/admin/admissions/details/training-programs/update"
+import UpdateAdmissionPlan from "@/pages/admin/admissions/update"
+import DepartmentTable from "@/pages/admin/departments"
+import CreateDepartment from "@/pages/admin/departments/create"
+import UpdateDepartment from "@/pages/admin/departments/update"
+import HighschoolTable from "@/pages/admin/highschools"
+import CreateHighSchool from "@/pages/admin/highschools/create"
+import UpdateHighSchool from "@/pages/admin/highschools/update"
+import InstitutionTable from "@/pages/admin/institutions"
+import CreateInstitution from "@/pages/admin/institutions/create"
+import UpdateInstitution from "@/pages/admin/institutions/update"
+import MajorTable from "@/pages/admin/majors"
+import CreateMajor from "@/pages/admin/majors/create"
+import UpdateMajor from "@/pages/admin/majors/update"
+import SchoolTable from "@/pages/admin/schools"
+import CreateSchool from "@/pages/admin/schools/create"
+import UpdateSchool from "@/pages/admin/schools/update"
+import UserTable from "@/pages/admin/users"
+import CreateUser from "@/pages/admin/users/create"
+import UpdateUser from "@/pages/admin/users/update"
+import AdmissionInfo from "@/pages/admission"
+import MajorCodes from "@/pages/admission/major-codes"
+import SubjectGroups from "@/pages/admission/subject-group"
+import Profile from "@/pages/profile"
+import Ranking from "@/pages/transcript"
 import School from "@/pages/school"
+import Signin from "@/pages/signin"
+import Signup from "@/pages/signup"
 import { Route, Routes } from "react-router-dom"
 import HomeLayout from "../components/layout/HomeLayout"
 import Home from "../pages/home"
 import Missing from "../pages/missing"
 import News from "../pages/news"
-import Admission from "@/pages/admission"
-import Signin from "@/pages/signin"
-import Signup from "@/pages/signup"
-import Ranking from "@/pages/ranking"
-import SubjectGroups from "@/pages/admission/subject-group"
-import AdminDashboard from "@/pages/admin"
-import AdminLayout from "@/components/layout/AdminLayout"
-import UserTable from "@/pages/admin/users"
-import InstitutionTable from "@/pages/admin/institutions"
-import MajorTable from "@/pages/admin/majors"
-import DepartmentTable from "@/pages/admin/departments"
-import CreateUser from "@/pages/admin/users/create"
-import UpdateUser from "@/pages/admin/users/update"
-import ProtectedRoute from "@/components/layout/ProtectedRoute"
-import CreateInstitution from "@/pages/admin/institutions/create"
-import UpdateInstitution from "@/pages/admin/institutions/update"
 import { roles } from "./constants"
-import AdmissionTable from "@/pages/admin/admissions"
-import AdmissionDetails from "@/pages/admin/admissions/details"
-import AdmissionTrainingPrograms from "@/pages/admin/admissions/details/training-programs"
-import AdmissionMajors from "@/pages/admin/admissions/details/majors"
-import CreateAdmissionTrainingPrograms from "@/pages/admin/admissions/details/training-programs/create"
-import UpdateAdmissionTraningPrograms from "@/pages/admin/admissions/details/training-programs/update"
-import CreateAdmissionMajor from "@/pages/admin/admissions/details/majors/create"
-import UpdateAdmissionMajor from "@/pages/admin/admissions/details/majors/update"
-import Profile from "@/pages/profile"
-import CreateAdmissionPlan from "@/pages/admin/admissions/create"
-import UpdateAdmissionPlan from "@/pages/admin/admissions/update"
-import UpdateMajor from "@/pages/admin/majors/update"
-import CreateMajor from "@/pages/admin/majors/create"
-import HighschoolTable from "@/pages/admin/highschools"
-import CreateHighSchool from "@/pages/admin/highschools/create"
-import UpdateHighSchool from "@/pages/admin/highschools/update"
-import SchoolTable from "@/pages/admin/schools"
-import CreateDepartment from "@/pages/admin/departments/create"
-import UpdateDepartment from "@/pages/admin/departments/update"
-import CreateSchool from "@/pages/admin/schools/create"
-import UpdateSchool from "@/pages/admin/schools/update"
 function App() {
 
   return (
@@ -55,11 +56,12 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/news" element={<News />} />
-        <Route path="/admission">
-          <Route index element={<Admission />} />
-          <Route path="subject-group" element={<SubjectGroups />} />
+        <Route path="/admission-info">
+          <Route index element={<AdmissionInfo />} />
+          <Route path="subject-groups" element={<SubjectGroups />} />
+          <Route path="major-codes" element={<MajorCodes />} />
         </Route>
-        <Route path="/ranking" element={<Ranking />} />
+        <Route path="/transcript" element={<Ranking />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
       <Route element={<ProtectedRoute allowedRoles={[roles.ADMIN]} />}>

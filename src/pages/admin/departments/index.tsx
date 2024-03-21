@@ -10,6 +10,7 @@ import { useGetDepartmentsQuery } from "@/app/services/majors";
 import { debounce } from "lodash";
 import OrderButton from "@/components/common/OrderToggle";
 import SearchBar from "@/components/common/SearchBar";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 
 export const DepartmentTable = () => {
@@ -41,6 +42,15 @@ export const DepartmentTable = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col py-4 gap-4">
+      <Breadcrumbs
+        parents={[
+          {
+            label: "Dashboard",
+            url: "/admin"
+          },
+        ]}
+        currentPage="Departments"
+      />
       <div className="flex items-start justify-between">
         <h1 className="text-3xl font-bold">Manage Departments</h1>
         <Button
@@ -55,7 +65,7 @@ export const DepartmentTable = () => {
         <SearchBar placeholder='Search departments...' searchTerm={searchTerm} handleChange={handleSearch} />
         <OrderButton asc={asc} toggleOrder={toggleOrder} />
       </div>
-      <DataTable searchKey="name" columns={columns} data={departments} loading={isLoading}/>
+      <DataTable searchKey="name" columns={columns} data={departments} loading={isLoading} />
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>
   );

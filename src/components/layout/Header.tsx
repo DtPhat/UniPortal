@@ -122,25 +122,25 @@ const Header = ({ isSchoolPage }: Props) => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
                     className="text-base"
-                    onClick={() => navigate("/admission")}
+                    onClick={() => navigate("/admission-info")}
                   >
                     Thông tin tuyển sinh
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="flex flex-col px-4 pb-2 md:w-[25rem] lg:w-[28rem] list-none divide-y gap-2">
-                      <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to='/admission'>
-                          Tổng hợp về các phương thức xét tuyển
+                    <li className="font-semibold text-gray-700 hover:text-accent pt-2">
+                        <Link to='/admission-info/major-codes'>
+                          Danh mục toàn bộ mã ngành tương ứng với các ngành
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to='/admission'>
+                        <Link to='/admission-info/subject-groups'>
                           Danh sách các khối thi và tổ hợp xét tuyển đại học
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to='/admission'>
-                          Danh mục các ngành tuyển sinh và mã ngành tương ứng
+                        <Link to='/admission-info'>
+                          Tổng hợp về các phương thức xét tuyển
                         </Link>
                       </li>
                     </ul>

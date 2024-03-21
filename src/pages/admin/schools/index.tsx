@@ -10,6 +10,7 @@ import { useGetSchoolsQuery } from "@/app/services/majors";
 import { debounce } from "lodash";
 import OrderButton from "@/components/common/OrderToggle";
 import SearchBar from "@/components/common/SearchBar";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 
 export const SchoolTable = () => {
@@ -41,6 +42,15 @@ export const SchoolTable = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col py-4 gap-4">
+      <Breadcrumbs
+        parents={[
+          {
+            label: "Dashboard",
+            url: "/admin"
+          },
+        ]}
+        currentPage="Schools"
+      />
       <div className="flex items-start justify-between">
         <h1 className="text-3xl font-bold">Manage Schools</h1>
         <Button
@@ -55,7 +65,7 @@ export const SchoolTable = () => {
         <SearchBar placeholder='Search schools...' searchTerm={searchTerm} handleChange={handleSearch} />
         <OrderButton asc={asc} toggleOrder={toggleOrder} />
       </div>
-      <DataTable searchKey="name" columns={columns} data={schools} loading={isLoading}/>
+      <DataTable searchKey="name" columns={columns} data={schools} loading={isLoading} />
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>
   );

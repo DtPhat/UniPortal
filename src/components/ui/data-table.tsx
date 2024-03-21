@@ -23,7 +23,8 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
-  loading?: boolean
+  loading?: boolean,
+  showSelected?: boolean,
 }
 
 export function DataTable<TData, TValue>({
@@ -31,6 +32,7 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   loading,
+  showSelected = true,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -108,7 +110,7 @@ export function DataTable<TData, TValue>({
           </ScrollArea>
       }
 
-      <div className="flex items-center justify-end space-x-2 py-4">
+      {showSelected && <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -131,7 +133,7 @@ export function DataTable<TData, TValue>({
             Next
           </Button>
         </div> */}
-      </div>
+      </div>}
     </>
   );
 }

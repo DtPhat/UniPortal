@@ -170,7 +170,7 @@ const Profile = () => {
             <img
               src={user?.data?.avatarLink || anonymous}
               alt="avatar"
-              className="rounded-full w-64"
+              className="rounded-full w-64 h-48"
             />
           </div>
           <p className="text-3xl font-semibold mt-2 text-center">

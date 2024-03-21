@@ -66,7 +66,7 @@ const UserMenu = () => {
             <div>Hồ sơ</div>
           </DropdownMenuItem>
           {userInfo?.role == roles.STUDENT && (
-            <DropdownMenuItem onClick={()=> navigate('/ranking')}>
+            <DropdownMenuItem onClick={()=> navigate('/transcript')}>
               <BookOpen className="w-4 h-4 text-black/70" />
               <div>Bảng điểm</div>
             </DropdownMenuItem>

@@ -9,9 +9,6 @@ interface SubjectGroupsResponse extends Pagination {
 export interface PageQuery {
   page?: number,
   search?: string,
-  id?: string,
-  institutionId?: string,
-  admissionId?: string
   all?: boolean
 }
 

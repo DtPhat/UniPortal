@@ -10,6 +10,7 @@ import { useGetDepartmentsQuery, useGetMajorsQuery } from "@/app/services/majors
 import { debounce } from "lodash";
 import SearchBar from "@/components/common/SearchBar";
 import OrderButton from "@/components/common/OrderToggle";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 
 export const MajorTable = () => {
@@ -42,6 +43,15 @@ export const MajorTable = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col py-4 gap-4">
+      <Breadcrumbs
+        parents={[
+          {
+            label: "Dashboard",
+            url: "/admin"
+          },
+        ]}
+        currentPage="Majors"
+      />
       <div className="flex items-start justify-between">
         <h1 className="text-3xl font-bold">Manage Majors</h1>
         <Button

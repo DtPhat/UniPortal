@@ -49,7 +49,9 @@ export const AdmissionDetails = () => {
           </div>
         </div>
         <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin fermentum sem ex. Etiam nisi ligula, cursus consequat eleifend vitae, sollicitudin et lorem. Nam dignissim augue feugiat orci hendrerit, quis facilisis elit convallis. Nulla pretium molestie metus in faucibus. Donec ornare dignissim mauris vitae ornare. Vestibulum tempor euismod dictum.
+          <span className="font-semibold">Description:</span> {data?.description
+            || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin fermentum sem ex. Etiam nisi ligula, cursus consequat eleifend vitae, sollicitudin et lorem. Nam dignissim augue feugiat orci hendrerit, quis facilisis elit convallis. Nulla pretium molestie metus in faucibus. Donec ornare dignissim mauris vitae ornare. Vestibulum tempor euismod dictum."
+          }
         </div>
         <div className="">
           <Button variant='link' className="text-lg gap-2 flex items-center" onClick={() => navigate('training-programs')}>
