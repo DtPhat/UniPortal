@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authReducer from '@/features/auth/authSlice'
 // import { apiSlice } from '../features/api/apiSlice';
 import { api } from './services/api'
+import { rtkQueryErrorLogger } from './middlewares'
 
 export const store = configureStore({
   reducer: {
@@ -10,7 +11,8 @@ export const store = configureStore({
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware().concat(api.middleware)
+    // .concat(rtkQueryErrorLogger),
 })
 
 export type RootState = ReturnType<typeof store.getState>

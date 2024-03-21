@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 const Missing = () => {
   return (
     <article style={{ padding: "100px" }}>
-      <h1>Oops!</h1>
-      <p>Page Not Found</p>
+      <h1>Ồ!</h1>
+      <p>Không tìm thấy trang</p>
       <div className="">
-        <Link to="/">Visit Our Homepage</Link>
+        <Link to="/">Quay về trang chủ</Link>
       </div>
     </article>
   )

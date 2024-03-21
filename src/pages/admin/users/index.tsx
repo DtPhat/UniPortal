@@ -63,7 +63,7 @@ export const UserTable = () => {
         <SearchBar placeholder='Search school...' searchTerm={searchTerm} handleChange={handleSearch} />
         <OrderButton asc={asc} toggleOrder={toggleOrder} />
       </div>
-      <DataTable searchKey="email" columns={columns} data={accountList} />
+      <DataTable searchKey="email" columns={columns} data={accountList} loading={isLoading}/>
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>
   );

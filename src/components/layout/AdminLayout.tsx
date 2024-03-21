@@ -1,7 +1,7 @@
 import { Link, Outlet, redirect, useLocation, useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import { cn } from "@/lib/shadcn";
-import { BarChartBigIcon, BookTextIcon, CircleUserIcon, GraduationCap, LibraryBigIcon, SchoolIcon } from "lucide-react";
+import { Backpack, BarChartBigIcon, BookCopyIcon, BookTextIcon, CircleUserIcon, GraduationCap, GraduationCapIcon, LibraryBigIcon, SchoolIcon, SheetIcon } from "lucide-react";
 import { useAppSelector } from "@/app/hooks";
 import { selectUserInfo } from "@/features/auth/authSlice";
 import { useEffect } from "react";
@@ -19,28 +19,46 @@ const AdminLayout = () => {
       label: "Dashboard",
     },
     {
-      title: "User",
-      href: "/admin/users",
-      icon: CircleUserIcon,
-      label: "User",
+      title: "Admission Plans",
+      href: "/admin/admissions",
+      icon: SheetIcon,
+      label: "Admission",
     },
     {
-      title: "Institution",
+      title: "Institutions",
       href: "/admin/institutions",
       icon: SchoolIcon,
       label: "User",
     },
     {
-      title: "Department",
-      href: "/admin/departments",
-      icon: LibraryBigIcon,
-      label: "Department",
+      title: "High Schools",
+      href: "/admin/high-schools",
+      icon: Backpack,
+      label: "Highschool",
     },
     {
-      title: "Major",
+      title: "Majors",
       href: "/admin/majors",
       icon: BookTextIcon,
       label: "Major",
+    },
+    {
+      title: "Departments",
+      href: "/admin/departments",
+      icon: BookCopyIcon,
+      label: "Department",
+    },
+    {
+      title: "Schools",
+      href: "/admin/schools",
+      icon: LibraryBigIcon,
+      label: "School",
+    },
+    {
+      title: "Accounts",
+      href: "/admin/users",
+      icon: CircleUserIcon,
+      label: "User",
     },
   ];
   const navigate = useNavigate()
@@ -55,7 +73,7 @@ const AdminLayout = () => {
       <div>
         <section className="flex justify-center px-2">
           <nav
-            className={`relative left-0 pt-12 hidden h-[calc(100vh-54px)] border-r-2 lg:block w-64`}
+            className={`relative left-0 pt-12 hidden min-h-[calc(100vh-60px)] border-r-2 lg:block w-72`}
           >
             <div className="space-y-4">
               <div className="px-3 py-2">
@@ -70,6 +88,7 @@ const AdminLayout = () => {
                           className={cn(
                             "group flex items-center rounded-md px-3 py-2 text-base font-medium hover:bg-slate-100 hover:text-slate-700",
                             item.href !== '/admin' && pathname.includes(item.href) ? "bg-slate-100" : "transparent",
+                            pathname == '/admin' && item.href == '/admin' ? "bg-slate-100" : "transparent",
                           )}
                         >
                           <item.icon className="mr-2 h-6 w-6" />

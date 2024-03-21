@@ -18,8 +18,8 @@ export const MajorTable = () => {
   const [asc, setAsc] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const { data, isLoading } = useGetMajorsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
+  console.log(data)
   const majors = data?.majors || []
-  console.log("Hello")
   const toggleOrder = () => {
     setAsc(prevState => !prevState)
   }
@@ -38,6 +38,7 @@ export const MajorTable = () => {
     setTotalPage(data?.totalPages || 1)
   }, [data]);
 
+  console.log(majors)
   const navigate = useNavigate();
   return (
     <div className="flex flex-col py-4 gap-4">
@@ -55,7 +56,7 @@ export const MajorTable = () => {
         <SearchBar placeholder='Search majors...' searchTerm={searchTerm} handleChange={handleSearch} />
         <OrderButton asc={asc} toggleOrder={toggleOrder} />
       </div>
-      <DataTable searchKey="name" columns={columns} data={majors} />
+      <DataTable searchKey="name" columns={columns} data={majors} loading={isLoading}/>
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>
   );

@@ -1,21 +1,24 @@
 import { Heading } from '@/components/common/Heading'
 import { Separator } from '@/components/ui/separator'
-import React, { useEffect } from 'react'
-import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from 'react'
 import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 
+import { roles, status } from '@/app/constants'
+import { useAppDispatch } from '@/app/hooks'
+import { useGetAccountQuery, useUpdateAccountMutation } from '@/app/services/users'
+import Breadcrumbs from '@/components/ui/breadcrumbs'
 import {
   Select,
   SelectContent,
@@ -23,14 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { DropdownSelect } from '@/components/common/DropdownSelect'
-import { register } from 'module'
-import { useGetAccountQuery, useRegisterMutation, useUpdateAccountMutation } from '@/app/services/users'
-import { useAppDispatch } from '@/app/hooks'
-import { roles, status } from '@/app/constants'
 import { useNavigate, useParams } from 'react-router-dom'
-import Breadcrumbs from '@/components/ui/breadcrumbs'
 
 const formSchema = z.object({
   role: z.string({
@@ -49,12 +45,15 @@ const UpdateUser = () => {
   const { data } = useGetAccountQuery(id ?? "")
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-  })
-  useEffect(() => {
-    if (data) {
-      form.setValue('role', data.role)
-      form.setValue('status', data.status)
+    defaultValues: {
+      role: data?.role,
+      status: data?.status,
     }
+  })
+  
+  useEffect(() => {
+    form.setValue('role', data?.role || ''),
+    form.setValue('status', data?.status || '')
   }, [data]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

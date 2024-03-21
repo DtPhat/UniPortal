@@ -15,15 +15,18 @@ import { institutionImages } from '@/data/placeholder'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { InstitutionSkeletonCard } from '@/components/common/Skeleton'
 import { debounce } from "lodash";
+import { useGetMajorsQuery } from '@/app/services/majors'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 const Home = () => {
   const [page, setPage] = useState(1);
   const [asc, setAsc] = useState(false)
   // const [sortObj, setSortObj] = useState<'name' | 'code'>('name')
   const [searchTerm, setSearchTerm] = useState('')
-  const { data, isLoading } = useGetInstitutionsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
+  const [selectedProvince, setSelectedProvince] = useState('');
+  const { data, isLoading } = useGetInstitutionsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm, provinceId: selectedProvince })
   const [totalPage, setTotalPage] = useState<number>(1);
-
+  const majors = useGetMajorsQuery({ all: true })?.data?.majors
 
   const toggleOrder = () => {
     setAsc(prevState => !prevState)
@@ -52,20 +55,35 @@ const Home = () => {
         <div className='flex flex-col gap-4 border-r-2 w-[19rem] pr-4 bg-white fixed'>
           <div className='flex gap-2 items-center font-semibold text-slate-500 hover:underline underline-offset-4 cursor-pointer'>
             <SlidersHorizontal className="text-slate-500" size={20} />
-            <h1 className='text-lg'>Filter</h1>
+            <h1 className='text-lg'>Lọc</h1>
           </div>
           <div className={style.filterWrapper}>
-            <div className={style.filterGroup}>
+            {/* <div className={style.filterGroup}>
               <h2>Select sector</h2>
               <DropdownSelect title='Sector' options={["All", "South", "North", "Center"]} />
-            </div>
-            <div className={style.filterGroup}>
+            </div> */}
+            {/* <div className={style.filterGroup}>
               <h2>Select province</h2>
               <DropdownSelect title='Province/City' options={["Ho Chi Minh", "Can Tho", "Tra Vinh", "An Giang"]} />
+            </div> */}
+            <div className={style.filterGroup}>
+              <h2>Select province</h2>
+              <Select name='province' onValueChange={value => setSelectedProvince(value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Chọn tỉnh thành" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Tỉnh thành</SelectLabel>
+                    <SelectItem value="24">Hồ Chí Minh</SelectItem>
+                    <SelectItem value="58">Hà Nội</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <Separator orientation="horizontal" />
-          <div className={style.filterWrapper}>
+          {/* <div className={style.filterWrapper}>
             <div className={style.filterGroup}>
               <h2>Enter admission score</h2>
               <div className="flex flex-wrap gap-4 items-center ">
@@ -76,25 +94,22 @@ const Home = () => {
               </div>
             </div>
             <div className=''>
-              {/* <div className="flex gap-2 items-center font-semibold">
-              <h2 className='w-36'>Choose year</h2>
-              <DropdownSelect options={["2024", "2023", "2022"]} />
-            </div> */}
               <SortBy title='Year' options={["2024", "2023", "2022"]} />
             </div>
-          </div>
+          </div> */}
           <Separator orientation="horizontal" />
           <div className={style.filterWrapper}>
-            <div className={style.filterGroup}>
+            {/* <div className={style.filterGroup}>
               <h2>Select Department</h2>
               <DropdownSelect title='Department' options={["Information Technology", "Business Management"]} />
-            </div>
+            </div> */}
             <div className={style.filterGroup}>
               <h2>Choose majors</h2>
-              <div className='flex flex-col gap-2'>
-                <CheckboxLabel label='Software Engineering' />
-                <CheckboxLabel label='Information Assurance' />
-                <CheckboxLabel label='Artificial Intelligence ' />
+              <div className='flex flex-col gap-2 h-96 overflow-auto'>
+                {
+                  majors?.map(item =>
+                    <CheckboxLabel label={item.name} />
+                  )}
               </div>
             </div>
           </div>
@@ -105,8 +120,8 @@ const Home = () => {
 
       <div className='col-span-3 flex flex-col gap-4'>
         <div className='flex gap-2 items-center'>
-          <SearchBar placeholder='Search departments...' searchTerm={searchTerm} handleChange={handleSearch} />
-          <SortBy options={["Name", "Code"]} />
+          <SearchBar placeholder='Tìm kiếm trường...' searchTerm={searchTerm} handleChange={handleSearch} />
+          <SortBy options={["Tên", "Mã"]} />
           <OrderButton asc={asc} toggleOrder={toggleOrder} />
         </div>
         <div className='flex flex-col gap-8'>
@@ -120,7 +135,7 @@ const Home = () => {
                     id={institution.id}
                     name={institution.name}
                     code={institution.code}
-                    image={institutionImages[institution.code as keyof typeof institutionImages]}
+                    image={institution.avatarLink}
                   />
                 )
             }

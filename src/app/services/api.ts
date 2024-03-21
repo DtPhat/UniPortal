@@ -7,8 +7,9 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query'
+import { toast } from '@/components/ui/use-toast'
 
-const BASE_URL = 'http://18.140.72.139'
+const BASE_URL = 'https://18.140.72.139'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -28,16 +29,20 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
   if (result.error?.status === 403 || result.error?.status === 401) {
+    toast({
+      title: "Unauthorized",
+      description: "Please login again to continue",
+    })
     api.dispatch(logout())
   }
   return result
 }
 
-const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 6 })
+const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 1 })
 
 export const api = createApi({
   baseQuery: baseQueryWithRetry,
-  tagTypes: ['User', 'Institution'],
+  tagTypes: ['User', 'Institution', 'Admission', 'Major', 'Highschool', 'Student'],
   endpoints: () => ({}),
 })
 
@@ -48,7 +53,7 @@ export const enhancedApi = api.enhanceEndpoints({
 
 export const customFetch = async (endpoint: string, token?: string) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/v1/accounts/current`, {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

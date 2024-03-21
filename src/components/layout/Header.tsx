@@ -35,16 +35,16 @@ type Props = {
 
 const schools = [
   {
-    value: "fpt",
-    label: "FPT University",
+    value: "42",
+    label: "Đại học Bách Khoa Hà Nội",
   },
   {
-    value: "bach khoa ha noi",
-    label: "Bách khoa Hà Nội",
+    value: "2",
+    label: "Trường Đại học Công nghệ Thông tin",
   },
   {
-    value: "hutech",
-    label: "Hutech University",
+    value: "6",
+    label: "Trường Đại học Quốc Tế",
   },
 ];
 
@@ -53,7 +53,7 @@ const Header = ({ isSchoolPage }: Props) => {
   const { userInfo } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [openSchool, setOpenSchool] = useState(false);
-  const [value, setValue] = useState("fpt");
+  const [value, setValue] = useState("42");
 
   return (
     <section className="border-b-2 flex justify-center px-1 sticky top-0 z-10 bg-white">
@@ -78,7 +78,7 @@ const Header = ({ isSchoolPage }: Props) => {
                   >
                     {value
                       ? schools.find((school) => school.value === value)?.label
-                      : "Select school..."}
+                      : "Chọn trường..."}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
@@ -124,7 +124,7 @@ const Header = ({ isSchoolPage }: Props) => {
                     className="text-base"
                     onClick={() => navigate("/admission")}
                   >
-                    Admission
+                    Thông tin tuyển sinh
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="flex flex-col px-4 pb-2 md:w-[25rem] lg:w-[28rem] list-none divide-y gap-2">
@@ -134,13 +134,13 @@ const Header = ({ isSchoolPage }: Props) => {
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to='/admission/subject-group'>
+                        <Link to='/admission'>
                           Danh sách các khối thi và tổ hợp xét tuyển đại học
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
                         <Link to='/admission'>
-                          Kế hoạch tuyển sinh năm {new Date().getFullYear()}
+                          Danh mục các ngành tuyển sinh và mã ngành tương ứng
                         </Link>
                       </li>
                     </ul>
@@ -151,29 +151,23 @@ const Header = ({ isSchoolPage }: Props) => {
                     className="text-base"
                     onClick={() => navigate("/news")}
                   >
-                    News
+                    Tin tức
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="flex flex-col px-4 pb-2 gap-2 divide-y font-semibold md:w-[12rem] lg:w-[16rem]">
+                    <ul className="flex flex-col px-4 pb-2 gap-2 divide-y font-semibold md:w-[25rem] lg:w-[28rem]">
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to="/news" className="pt-2">Technology Intelligence</Link>
+                        <Link to="/news" className="pt-2">Đề án tuyển sinh Đại học Bách Khoa Hà Nội 2023</Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to="/news" className="pt-2">Vovinam Performance</Link>
+                        <Link to="/news" className="pt-2">Tin tuyển sinh Đại học Đà Nẵng</Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to="/news" className="pt-2">RMIT Pioneer</Link>
+                        <Link to="/news" className="pt-2">Trường Đại học Quốc Tế - ĐHQG TP.HCM đạt chỉ tiêu tuyển sinh năm nay</Link>
                       </li>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
-              <Link to="/ranking">
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <TrophyIcon size={20} />
-                  <span>Ranking</span>
-                </NavigationMenuLink>
-              </Link>
             </NavigationMenu>
 
             {
@@ -181,10 +175,10 @@ const Header = ({ isSchoolPage }: Props) => {
                 <div><UserMenu /></div>
                 : <div className="flex gap-2">
                   <Button variant="outline" className="" onClick={() => navigate('/signin')}>
-                    Sign in
+                    Đăng nhập
                   </Button>
                   <Button onClick={() => navigate('/signup')}>
-                    Sign up
+                    Đăng kí
                   </Button>
                 </div>
             }

@@ -12,6 +12,15 @@ export function SkeletonCard() {
   )
 }
 
+export function DataTableSkeleton() {
+  return (
+    <div className="flex flex-col w-full">
+      <Skeleton className="w-full h-96" />
+      
+    </div>
+  )
+}
+
 export function InstitutionSkeletonCard() {
   return (
     <div className="flex flex-col space-y-3">

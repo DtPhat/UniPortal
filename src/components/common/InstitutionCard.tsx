@@ -7,15 +7,18 @@ import ExpandableArea from "./ExpandableArea";
 import LinkText from "./LinkText";
 import { Bookmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { institutionIntroductions } from "@/data/placeholder";
+import { useGetInstitutionQuery } from "@/app/services/institution";
+import { Typography } from "@mui/material";
 
 interface InstitutionCard {
-  id: number,
-  name: string,
-  code: string,
-  image?: string,
+  id: number;
+  name: string;
+  code: string;
+  image?: string;
 }
 
-const InstitutionCard = ({name, code, image} : InstitutionCard) => {
+const InstitutionCard = ({ id, name, code, image }: InstitutionCard) => {
   const [tabs, setTabs] = useState<"introduction" | "admission" | "contact">(
     "introduction"
   );
@@ -25,13 +28,27 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
     tabs: `py-1 gap-4 px-8 text-lg text-slate-500 hover:text-slate-900 `,
     chosenTabs: "text-slate-900 border-b-2 border-accent font-semibold",
   };
-  const description =
-    "Trường Đại học FPT - trường đào tạo và cung cấp nguồn nhân lực chất lượng cao thuộc ngành Công nghệ thông tin (Chuyên ngành Kỹ thuật phần mềm, An toàn thông tin, Thiết kế Mỹ thuật số), Quản trị kinh doanh (Chuyên ngành Quản trị kinh doanh, Kinh doanh quốc tế, Quản trị du lịch và lữ hành, Quản trị Khách sạn, Truyền thông đa phương tiện), Ngôn ngữ Anh, Ngôn ngữ Hàn, Ngôn ngữa Nhật cho các doanh nghiệp trong nước, các tập đoàn nước ngoài và doanh nghiệp khởi sự từ sinh viên Đại học FPT.";
-  // const descriptions = [
-  //   "Trường Đại học FPT - trường đào tạo và cung cấp nguồn nhân lực chất lượng cao thuộc ngành Công nghệ thông tin (Chuyên ngành Kỹ thuật phần mềm, An toàn thông tin, Thiết kế Mỹ thuật số), Quản trị kinh doanh (Chuyên ngành Quản trị kinh doanh, Kinh doanh quốc tế, Quản trị du lịch và lữ hành, Quản trị Khách sạn, Truyền thông đa phương tiện), Ngôn ngữ Anh, Ngôn ngữ Hàn, Ngôn ngữa Nhật cho các doanh nghiệp trong nước, các tập đoàn nước ngoài và doanh nghiệp khởi sự từ sinh viên Đại học FPT.",
-  //   "Admission: ",
-  //   "Contact:  ",
-  // ];
+
+  let description;
+  const contact = useGetInstitutionQuery(id.toString()!);
+  switch (tabs) {
+    case "introduction":
+      description =
+        institutionIntroductions[code as keyof typeof institutionIntroductions];
+      break;
+    case "admission":
+      description = "Phương thức xét tuyển tài năng (XTTN) \n Phương thức đánh giá năng lực (ĐGNL) \n Kết quả thi tốt nghiệp \n Xét tuyển thẳng";
+      description = description.split('\n').map((line, index) => <p key={index}>{line}</p>);
+      break;
+    case "contact":
+      const emails = contact.data?.emails.map((email) => email.value).join(", ");
+      const phones = contact.data?.phones.map((phone) => phone.value).join(", ");
+      description = `Email: ${emails} \n Phone: ${phones}`;
+      description = description.split('\n').map((line, index) => <p key={index}>{line}</p>);
+      break;
+    default:
+      description = "";
+  }
 
   const navigate = useNavigate();
   return (
@@ -44,12 +61,12 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
             className="rounded w-24 h-24 border-2 object-fill"
           />
           <div className="flex flex-col gap-1">
-            <LinkText navigateTo="/school/fpt" style="text-lg">
+            <LinkText navigateTo={`/school/${id}`} style="text-lg">
               {name}
             </LinkText>
             {/* <Stars5 rating={3.2} /> */}
             <div className="text-black/70 text-base font-semibold">
-              Code: <span className="">{code}</span>
+              Mã trường: <span className="">{code}</span>
             </div>
             <button className="flex items-center text-base gap-1 group text-gray-500 pt-2">
               <Bookmark
@@ -67,9 +84,9 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
         <Button
           variant="ghost"
           className="text-base text-gray-500 flex items-center gap-1 m-2"
-          onClick={() => navigate("/school/fpt")}
+          onClick={() => navigate(`/school/${id}`)}
         >
-          <span>Go to school page</span>
+          <span>Vào trang trường</span>
           <ArrowRight size={16} className="pt-0.5" />
         </Button>
       </div>
@@ -81,7 +98,7 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
           }`}
           onClick={() => setTabs("introduction")}
         >
-          Introduction
+          Giới thiệu
         </button>
         <button
           className={`${style.tabs} ${
@@ -89,7 +106,7 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
           }`}
           onClick={() => setTabs("admission")}
         >
-          Admission
+          Tuyển sinh
         </button>
         <button
           className={`${style.tabs} ${
@@ -97,12 +114,12 @@ const InstitutionCard = ({name, code, image} : InstitutionCard) => {
           }`}
           onClick={() => setTabs("contact")}
         >
-          Contact
+          Liên hệ
         </button>
       </div>
-      <CardContent className="py-2 pb-4 px-8 ">
+      <CardContent className="py-2 pb-4 px-8 min-h-32 ">
         <div className="">
-          <ExpandableArea text={description} limit={300} />
+          <Typography>{description}</Typography>
         </div>
         {/* {tabs === 'introduction' && (
       <p className=''>

@@ -9,6 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/use-toast";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,7 +25,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [deleteInstitution, { isLoading }] = useDeleteInstitutionMutation()
   const onConfirm = async () => {
     await deleteInstitution(data?.id).then(() => {
-      navigate('/admin/institutions')
+      toast({
+        title: "Chosen item was deleted successfully",
+        description: (new Date()).toUTCString(),
+      })
+      setOpen(false)
     })
   };
 

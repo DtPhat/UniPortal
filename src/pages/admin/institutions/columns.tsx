@@ -25,8 +25,9 @@ export const columns: ColumnDef<Institution>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "image",
+    accessorKey: "avatarLink",
     header: "IMAGE",
+    cell: ({ row }) => <img src={row.original.avatarLink} className="w-12 h-12" alt={row.original.name}/>
   },
   {
     accessorKey: "name",

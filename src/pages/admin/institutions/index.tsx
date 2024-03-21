@@ -20,6 +20,7 @@ export const InstitutionTable = () => {
   const [searchTerm, setSearchTerm] = useState('')
 
   const { data, isLoading } = useGetInstitutionsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
+  console.log(data)
   const institutions = data?.institutions || []
   const toggleOrder = () => {
     setAsc(prevState => !prevState)
@@ -65,7 +66,7 @@ export const InstitutionTable = () => {
         <SearchBar placeholder='Search institutions...' searchTerm={searchTerm} handleChange={handleSearch} />
         <OrderButton asc={asc} toggleOrder={toggleOrder} />
       </div>
-      <DataTable searchKey="name" columns={columns} data={institutions} />
+      <DataTable searchKey="name" columns={columns} data={institutions} loading={isLoading}/>
       <Pagination count={totalPage} page={0} handleChange={handlePageChange} />
     </div>
   );

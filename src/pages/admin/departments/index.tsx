@@ -20,7 +20,6 @@ export const DepartmentTable = () => {
   const { data, isLoading } = useGetDepartmentsQuery({ page: page, sort: asc ? 'ASC' : 'DESC', search: searchTerm })
 
   const departments = data?.departments || []
-  console.log("Hello")
   const toggleOrder = () => {
     setAsc(prevState => !prevState)
   }
@@ -56,7 +55,7 @@ export const DepartmentTable = () => {
         <SearchBar placeholder='Search departments...' searchTerm={searchTerm} handleChange={handleSearch} />
         <OrderButton asc={asc} toggleOrder={toggleOrder} />
       </div>
-      <DataTable searchKey="name" columns={columns} data={departments} />
+      <DataTable searchKey="name" columns={columns} data={departments} loading={isLoading}/>
       <Pagination count={totalPage} page={page} handleChange={handlePageChange} />
     </div>
   );

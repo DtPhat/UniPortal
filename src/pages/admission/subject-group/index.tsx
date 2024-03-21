@@ -1,11 +1,11 @@
 import {
   useGetSubjectGroupsQuery,
-} from '../../../app/services/subjectGroups'
+} from '../../../app/services/subjects'
 
 import React from 'react'
 
 const SubjecGroup = () => {
-  const { data: posts, isLoading } = useGetSubjectGroupsQuery()
+  const { data: posts, isLoading } = useGetSubjectGroupsQuery({all: true})
 
   if (isLoading) {
     return <div>Loading</div>

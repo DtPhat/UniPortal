@@ -27,11 +27,19 @@ import {
 } from "@/components/ui/select"
 import { useNavigate, useParams } from 'react-router-dom'
 import { Input } from '@/components/ui/input'
+import { toast } from '@/components/ui/use-toast'
+import { useGetWardsQuery } from '@/app/services/address'
 
 const formSchema = z.object({
-  name: z.string().min(1),
+  name: z.string(),
   code: z.string().length(3),
-  description: z.string()
+  avatarLink: z.string(),
+  website: z.string(),
+  email: z.string(),
+  phone: z.string(),
+  houseNumber: z.string(),
+  streetName: z.string(),
+  wardId: z.coerce.number({}),
 })
 
 const UpdateInstitution = () => {
@@ -42,15 +50,22 @@ const UpdateInstitution = () => {
   const { data } = useGetInstitutionQuery(id ?? "")
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: data?.name,
+      code: data?.code,
+      avatarLink: data?.avatarLink,
+    },
   })
 
   useEffect(() => {
+    console.log(data)
     if (data) {
       form.setValue('name', data.name)
       form.setValue('code', data.code)
-      form.setValue('description', data.description)
+      form.setValue('avatarLink', data.avatarLink)
     }
   }, [data]);
+  const wards = useGetWardsQuery({ all: true }).data?.wards
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(id)
@@ -59,10 +74,58 @@ const UpdateInstitution = () => {
       body: {
         name: values.name,
         code: values.code,
-        description: values.description
+        avatarLink: values.avatarLink,
+        website1: {
+          value: values.website,
+          title: "string"
+        },
+        // "website2": {
+        //   "value": "string",
+        //   "title": "string"
+        // },
+        // "website3": {
+        //   "value": "string",
+        //   "title": "string"
+        // },
+        email1: {
+          value: values.email,
+          title: "string"
+        },
+        // "email2": {
+        //   "value": "string",
+        //   "title": "string"
+        // },
+        // "email3": {
+        //   "value": "string",
+        //   "title": "string"
+        // },
+        phone1: {
+          value: values.phone,
+          title: "string"
+        },
+        // "phone2": {
+        //   "value": "string",
+        //   "title": "string"
+        // },
+        // "phone3": {
+        //   "value": "string",
+        //   "title": "string"
+        // },
+        addresses: [
+          {
+            houseNumber: values.houseNumber,
+            streetName: values.streetName,
+            wardId: values.wardId,
+            description: "string"
+          }
+        ]
       }
     }).then(() => {
-      navigate('/admin/users')
+      navigate('/admin/institutions')
+      toast({
+        title: "Chosen item was updated successfully",
+        description: (new Date()).toUTCString(),
+      })
     })
   }
   return (
@@ -94,7 +157,7 @@ const UpdateInstitution = () => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Institution name" {...field} />
+                    <Input placeholder="Institution name" {...field} defaultValue={field.value}/>
                   </FormControl>
                   {/* <FormDescription>
                   This is your public display name.
@@ -111,7 +174,7 @@ const UpdateInstitution = () => {
                 <FormItem>
                   <FormLabel>Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="Institution code" {...field} />
+                    <Input placeholder="Institution code" {...field} defaultValue={field.value}/>
                   </FormControl>
                   {/* <FormDescription>
                   This is your public display name.
@@ -123,16 +186,128 @@ const UpdateInstitution = () => {
 
             <FormField
               control={form.control}
-              name="description"
+              name="avatarLink"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Image</FormLabel>
                   <FormControl>
-                    <Input placeholder="Institution description" {...field} />
+                    <Input placeholder="Institution image" {...field} defaultValue={field.value}/>
                   </FormControl>
                   {/* <FormDescription>
                   This is your public display name.
                 </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Website</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Website for institution" {...field} />
+                  </FormControl>
+                  {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email for the institution" {...field} />
+                  </FormControl>
+                  {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Phone for the institution" {...field} />
+                  </FormControl>
+                  {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="houseNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>House number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="House number for the institution" {...field} />
+                  </FormControl>
+                  {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="streetName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Street Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Street name for the institution" {...field} />
+                  </FormControl>
+                  {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="wardId"
+              render={({ field }) => (
+                <FormItem >
+                  <FormLabel>Ward</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select institution ward" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {
+                        wards?.map(item =>
+                          <SelectItem value={item.id.toString()}>{item.name}</SelectItem>
+                        )
+                        // options.map((item, index) =>
+                        //   <SelectItem key={index} value={item.id.toString()}>{item.name}</SelectItem>
+                        // )
+                      }
+                    </SelectContent>
+                  </Select>
+                  {/* <FormDescription>
+                    You can manage email addresses in your{" "}
+                  </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}

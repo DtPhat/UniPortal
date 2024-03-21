@@ -11,3 +11,12 @@ export const Heading = ({ title, description }: HeadingProps) => {
     </div>
   );
 };
+
+export const MiniHeading = ({ title, description }: HeadingProps) => {
+  return (
+    <div>
+      <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+      <p className="text-sm text-black/50">{description}</p>
+    </div>
+  );
+};

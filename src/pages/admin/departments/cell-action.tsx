@@ -1,4 +1,5 @@
-import { Department, Institution } from "@/app/types";
+import { useDeleteDepartmentMutation, useDeleteMajorMutation } from "@/app/services/majors";
+import { Department, Major } from "@/app/types";
 import { AlertModal } from "@/components/common/AlertModel";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/use-toast";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +22,25 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
-  const onConfirm = async () => { };
+  const [deleteDepartment] = useDeleteDepartmentMutation()
+  const onConfirm = async () => {
+    await deleteDepartment(data?.id)
+      .unwrap()
+      .then(() => {
+        toast({
+          title: "Chosen item was deleted successfully",
+          description: (new Date()).toUTCString(),
+        })
+        setOpen(false)
+      })
+      .catch(error => {
+        toast({
+          title: JSON.stringify(error),
+          description: (new Date()).toUTCString(),
+        })
+        setOpen(false)
+      })
+  };
 
   return (
     <>
@@ -41,7 +60,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => navigate(`/admin/departments/${data.id}`)}
+            onClick={() => navigate(`/admin/majors/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>

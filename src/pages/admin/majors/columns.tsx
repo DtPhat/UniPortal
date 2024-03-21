@@ -33,6 +33,13 @@ export const columns: ColumnDef<Major>[] = [
     header: "CODE",
   },
   {
+    accessorKey: "department",
+    header: "DEPARTMENT",
+    cell: ({ row }) => (
+      <div>{row.original.department.name}</div>
+    ),
+  },
+  {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
   },

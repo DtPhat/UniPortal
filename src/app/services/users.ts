@@ -59,13 +59,23 @@ export const usersApi = api.injectEndpoints({
         url: `/api/v1/accounts/${id}`,
         method: 'GET',
       }),
+      providesTags: ['User'],
     }),
-    getCurrentUser: builder.query<any, void>({
+    getCurrentUser: builder.query<Account, void>({
       query: () => ({
         url: `/api/v1/accounts/current`
-      })
-    })
+      }),
+      providesTags: ['User'],
+    }),
+    updateCurrentUser: builder.mutation({
+      query: ({body}) => ({
+        url: `/api/v1/accounts/current`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['User'],
+    }),
   })
 })
 
-export const { useLoginMutation, useLoginGoogleMutation, useRegisterMutation, useGetAccountsQuery, useGetCurrentUserQuery, useUpdateAccountMutation, useGetAccountQuery } = usersApi
+export const { useLoginMutation, useLoginGoogleMutation, useRegisterMutation, useGetAccountsQuery, useGetCurrentUserQuery, useUpdateAccountMutation, useGetAccountQuery, useUpdateCurrentUserMutation } = usersApi
