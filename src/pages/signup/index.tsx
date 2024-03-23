@@ -19,7 +19,7 @@ const Signup = () => {
       <section className="grid grid-cols-2">
         <form className="flex flex-col items-center text-black justify-center p-4">
           <div className="text-center mb-4">
-            <h1 className="text-2xl font-semibold mb-2">SIGN UP</h1>
+            <h1 className="text-2xl font-semibold mb-2">ĐĂNG KÝ</h1>
             <h2 className="w-full text-lg text-black/50 font-semibold">
               Nhập thông tin của bạn
             </h2>
