@@ -30,7 +30,7 @@ import UpdateSchool from "@/pages/admin/schools/update"
 import UserTable from "@/pages/admin/users"
 import CreateUser from "@/pages/admin/users/create"
 import UpdateUser from "@/pages/admin/users/update"
-import AdmissionInfo from "@/pages/admission"
+import AdmissionMethods from "@/pages/admission/methods"
 import MajorCodes from "@/pages/admission/major-codes"
 import SubjectGroups from "@/pages/admission/subject-group"
 import Profile from "@/pages/profile"
@@ -44,6 +44,9 @@ import Home from "../pages/home"
 import Missing from "../pages/missing"
 import News from "../pages/news"
 import { roles } from "./constants"
+import NewsDetails from "@/pages/news/details"
+import AdmissionInfo from "@/pages/admission"
+import Wishlist from "@/pages/wishlist"
 function App() {
 
   return (
@@ -55,14 +58,23 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/news" element={<News />} />
+        <Route path="/news">
+          <Route index element={<News />} />
+          <Route path=":id" element={<NewsDetails />} />
+        </Route>
         <Route path="/admission-info">
           <Route index element={<AdmissionInfo />} />
+          <Route path="methods" element={<AdmissionMethods />} />
           <Route path="subject-groups" element={<SubjectGroups />} />
           <Route path="major-codes" element={<MajorCodes />} />
         </Route>
         <Route path="/transcript" element={<Ranking />} />
         <Route path="/profile" element={<Profile />} />
+
+        <Route element={<ProtectedRoute allowedRoles={[roles.STUDENT]} />}>
+          <Route path="/wishlist" element={<Wishlist />} />
+        </Route>
+        
       </Route>
       <Route element={<ProtectedRoute allowedRoles={[roles.ADMIN]} />}>
         <Route path="/admin" element={<AdminLayout />}>
@@ -116,7 +128,7 @@ function App() {
           <Route path="schools">
             <Route index element={<SchoolTable />} />
             <Route path=":id" element={<UpdateSchool />} />
-            <Route path="new" element={<CreateSchool  />} />
+            <Route path="new" element={<CreateSchool />} />
           </Route>
 
           <Route path="users">
@@ -124,9 +136,10 @@ function App() {
             <Route path=":id" element={<UpdateUser />} />
             <Route path="new" element={<CreateUser />} />
           </Route>
-          
+
         </Route>
       </Route>
+
       <Route path="*" element={<Missing />} />
     </Routes>
   )

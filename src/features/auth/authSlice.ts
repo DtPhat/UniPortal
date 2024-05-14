@@ -1,8 +1,7 @@
-// features/auth/authSlice.js
 import { RootState } from '@/app/store';
 import { createSlice } from '@reduxjs/toolkit'
 type AuthType = {
-  userInfo: null | {
+  userInfo: {
     id: number,
     email: string,
     firstName: string,
@@ -10,13 +9,16 @@ type AuthType = {
     role?: 'ADMIN' | 'STAFF' | 'STUDENT',
     status?: 'ACTIVE' | 'INACTIVE' | 'UNVALIDATED',
     avatarLink: null | string
-  },
-  userToken: null | string,
+  } | null,
+  userToken: string | null,
 }
 
+const userInfoString = localStorage.getItem('userInfo');
+const userToken = localStorage.getItem('userToken');
+
 const initialState: AuthType = {
-  userInfo: JSON.parse(localStorage.getItem('userInfo') || 'null'),
-  userToken: localStorage.getItem('userToken') || null,
+  userInfo: userInfoString ? JSON.parse(userInfoString) : null,
+  userToken: userToken || null,
 }
 
 const authSlice = createSlice({

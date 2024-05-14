@@ -30,23 +30,19 @@ import { Container } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { fetch } from "undici-types";
 import { z } from "zod";
-
+import { anonymousAvatar } from "@/data/defaultValues";
 const Profile = () => {
   const user = useGetCurrentUserQuery();
   const student = useGetCurrentStudentQuery();
   // const [student, setStudent] = useState<Student>()
   const [updateAccount, { isLoading }] = useUpdateCurrentUserMutation();
   const [updateStudent] = useUpdateCurrentStudentMutation();
-  const highschools = useGetHighschoolsQuery({all: true})?.data?.highSchools
+  const highschools = useGetHighschoolsQuery({ all: true })?.data?.highSchools
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useAppDispatch();
   const userToken = useAppSelector(selectUserToken);
-  const anonymous =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_rW9tvc5tzHfImg0xXTReFOQIAuAbt-EXuFdvzgB9g&s";
-
   // Form schema definition
   const formSchema1 = z.object({
     firstName: z.string({
@@ -168,9 +164,9 @@ const Profile = () => {
         <div className="flex flex-col gap-2">
           <div className="flex justify-center ">
             <img
-              src={user?.data?.avatarLink || anonymous}
+              src={user?.data?.avatarLink || anonymousAvatar}
               alt="avatar"
-              className="rounded-full w-64 h-48"
+              className="rounded-full w-64 h-64 object-cover"
             />
           </div>
           <p className="text-3xl font-semibold mt-2 text-center">

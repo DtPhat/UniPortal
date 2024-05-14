@@ -17,7 +17,7 @@ interface InstitutionResponse extends Pagination {
 export const institutionApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getInstitutions: builder.query<InstitutionResponse, PageQuery>({
-      query: ({ page = 1, search = '', sort = 'ASC', all= false }) => ({
+      query: ({ page = 1, search = '', sort = 'ASC', all = false }) => ({
         url: `/api/v1/institutions?search=${search}&sort=${sort}&page=${page}&all=${all}`
       }),
       providesTags: ['Institution']
@@ -36,7 +36,7 @@ export const institutionApi = api.injectEndpoints({
       invalidatesTags: ['Institution'],
     }),
     updateInstitution: builder.mutation({
-      query: ({id, body}) => ({
+      query: ({ id, body }) => ({
         url: `/api/v1/institutions/${id}`,
         method: 'PUT',
         body: body,
@@ -50,9 +50,15 @@ export const institutionApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Institution'],
     }),
+    getInstitutionsByProvince: builder.query<InstitutionResponse, PageQuery>({
+      query: ({ page = 1, search = '', sort = 'ASC', provinceId }) => ({
+        url: `/api/v1/institutions/city-provinces/${provinceId}?search=${search}&sort=${sort}&page=${page}`
+      }),
+      providesTags: ['Institution']
+    }),
   }),
 })
 
 export const {
-  useGetInstitutionsQuery, useCreateInstitutionMutation, useDeleteInstitutionMutation, useUpdateInstitutionMutation, useGetInstitutionQuery
+  useGetInstitutionsQuery, useCreateInstitutionMutation, useDeleteInstitutionMutation, useUpdateInstitutionMutation, useGetInstitutionQuery, useGetInstitutionsByProvinceQuery
 } = institutionApi

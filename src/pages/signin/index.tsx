@@ -23,28 +23,18 @@ const Signin = () => {
   const fromPathname = location.state?.from?.pathname
   const [showingPassword, setShowingPassword] = useState(false)
   const [serverReponse, setServerResponse] = useState()
-  //Firebase Google Sigin
-console.log(serverReponse)
+
+  console.log(serverReponse)
 
   const googleAuthenticate = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        // const token = credential?.accessToken;
-        // const user = result.user;
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const loginResponse = await loginGoolge({ idToken: credential?.idToken }).unwrap()
         loginResponse?.token && handleAfterLogin(loginResponse.token)
       }).catch((error) => {
-        // Handle Errors here.
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(error)
-        // ...
       });
   }
 
@@ -53,12 +43,8 @@ console.log(serverReponse)
     try {
       const loginResponse = await login({ email, password }).unwrap();
       loginResponse?.token && handleAfterLogin(loginResponse?.token)
-      // const userToken = loginResponse.token
-      // const userInfo = await customFetch('/api/v1/accounts/current', userToken)
-      // dispatch(setCredentials({ ...userInfo, userToken }));
-      // navigate('/admin/users');
     } catch (error : any) {
-      setServerResponse(error?.data?.violations?.join(','))
+      setServerResponse(error?.data?.violations?.join('\n'))
       toast({
         title: 'Authentication failed'
       })
@@ -82,12 +68,12 @@ console.log(serverReponse)
   return (
       <div className="shadow-md my-4">
         <div className="grid grid-cols-2">
-          <div className="bg-gradient-to-b rounded-l from-black/90 via-gray-500 to-gray-200 text-white font-semibold justify-center text-center">
+          <div className="hidden lg:block bg-gradient-to-b rounded-l from-black/90 via-gray-500 to-gray-200 text-white font-semibold justify-center text-center">
             <img className=" pt-12 h-auto" src="https://bcp.cdnchinhphu.vn/334894974524682240/2022/12/5/dhbkhn-6920-1658994052-1-16702134834751920701721.jpg"></img>
           </div>
-          <div className="flex flex-col items-center justify-center p-4">
+          <div className="col-span-2 lg:col-span-1 flex flex-col items-center justify-center p-4">
             <div className="text-center mb-4">
-              <h1 className="text-2xl font-semibold mb-4">ĐĂNG NHẬP</h1>
+              <h1 className="text-2xl font-bold mb-4">ĐĂNG NHẬP</h1>
               <h2 className="text-lg font-semibold text-black/50">
                 Chào mừng quay trở lại!
               </h2>
@@ -100,16 +86,16 @@ console.log(serverReponse)
                 defaultValue={'admin@uniportal.com'}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full px-2 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-4"
+                className="block w-full px-3 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-4"
               />
               <label className="font-semibold mb-2">Mật khẩu:</label>
               <Input
                 type="password"
-                placeholder="*****"
+                placeholder=""
                 defaultValue={'3c6a8c7cf641a2275b0c372052ed3945'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-2 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-6"
+                className="block w-full px-3 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-6"
               />
               <div className="flex justify-between mb-2">
                 <CheckboxLabel label="Ghi nhớ" />
@@ -128,10 +114,10 @@ console.log(serverReponse)
                 {
                   basicLoginResponse.isLoading || googleLoginResponse.isLoading ?
                     <ReloadIcon className="h-5 w-5 animate-spin" />
-                    : <span>Đăng nhập</span>
+                    : <span>Đăng ký</span>
                 }
               </Button>
-              <div className="mt-2 text-red-700">{serverReponse || ''}</div>
+              <div className="mt-2 text-red-700 whitespace-pre px-2">{serverReponse || ''}</div>
               <div className="text-center justify-center p-4">
                 <div className='flex justify-center text-center border-b-2 border-gray-300 relative mt-4'>
                   <span className='absolute top-[-0.8rem] bg-white text-gray-500 px-2'>Hoặc</span>
@@ -155,7 +141,7 @@ console.log(serverReponse)
                 <div className="mt-2 text-white-300">
                   Không có tài khoản
                   <Link to="/signup" className="ml-4 text-accent font-semibold">
-                    Đăng ký
+                    Đăng nhập
                   </Link>
                 </div>
               </div>

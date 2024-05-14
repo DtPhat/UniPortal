@@ -6,7 +6,7 @@ const Missing = () => {
       <h1>Ồ!</h1>
       <p>Không tìm thấy trang</p>
       <div className="">
-        <Link to="/">Quay về trang chủ</Link>
+        <Link to="/" className="font-bold text-accent">Quay về trang chủ</Link>
       </div>
     </article>
   )

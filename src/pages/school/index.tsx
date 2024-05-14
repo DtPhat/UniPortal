@@ -4,7 +4,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/navigation-tabs";
-import { Bookmark, Plus } from "lucide-react";
+import { Bookmark, BookmarkCheck, Plus } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -30,7 +30,7 @@ import Breadcrumbs from "@/components/ui/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { DoubleArrowRightIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetInstitutionQuery } from "@/app/services/institution";
 import {
   institutionBanner,
@@ -44,134 +44,23 @@ import {
 } from "@/components/ui/card";
 import { CardContent } from "@mui/material";
 import SearchBar from "@/components/common/SearchBar";
-
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { addToWishList, selectWishlistItem } from "@/features/wishlist/wishlistSlice";
+import { selectUserInfo } from "@/features/auth/authSlice";
+import { majors } from '@/data/placeholder';
+import { LoginAlertModel } from "@/components/common/AlertModel";
 const School = () => {
-  //   const schoolIntroduction = `Chính thức thành lập ngày 8/9/2006 theo Quyết định của Thủ tướng Chính phủ, Trường Đại học FPT trở thành trường đại học đầu tiên của Việt Nam do một doanh nghiệp đứng ra thành lập với 100% vốn đầu tư từ Tập đoàn FPT.
-  // Sự khác biệt của Trường Đại học FPT so với các trường đại học khác là đào tạo theo hình thức liên kết chặt chẽ với các doanh nghiệp, gắn đào tạo với thực tiễn, với nghiên cứu – triển khai và các công nghệ hiện đại nhất. Triết lý và phương pháp giáo dục hiện đại; Đào tạo con người toàn diện, hài hòa; Chương trình luôn được cập nhật và tuân thủ các chuẩn công nghệ quốc tế; Đặc biệt chú trọng kỹ năng ngoại ngữ; Tăng cường đào tạo quy trình tổ chức sản xuất, kỹ năng làm việc theo nhóm và các kỹ năng cá nhân khác là những điểm sẽ đảm bảo cho sinh viên tốt nghiệp có những cơ hội việc làm tốt nhất sau khi ra trường.
-  // Trường hiện đang đào tạo các nhóm ngành CNTT, Kinh tế, Ngôn ngữ, Mỹ thuật ứng dụng.
-  // Tất cả sinh viên Đại học FPT đều phải trải qua 1 năm hoàn thiện tiếng Anh, để có thể theo học chương trình chính khoá được đào tạo bằng tiếng Anh. Trong một năm đầu tiên học tiếng Anh, sinh viên được gửi sang các trường đại học ở các nước nói tiếng Anh (trong vòng 2 tháng) để thật sự lưu loát ngôn ngữ bắt buộc cho học tập và làm việc sau này.
-  // Sau 5 học kỳ đầu tiên, với tiếng Anh và các kỹ năng cơ bản của ngành học, sinh viên được gửi vào làm thực tập sinh trong các công ty thành viên của tập đoàn FPT trong vòng 4 đến 8 tháng. Tại đây sinh viên được huấn luyện thực tế về nghề nghiệp tương lai, tham gia vào các dự án thật (real project) và có thể được trả lương. Đó là giai đoạn On-the-Job-Training (OJT) đặc thù của trường đại học FPT. Một số ngành như tiếng Nhật, Quản trị Khách sạn, sinh viên đi OJT tại Nhật Bản, tại Malaysia,…
-  // Tỉ lệ việc làm của trường cũng đạt được con số ấn tượng. 96% sinh viên Đại học FPT có việc làm sau khi tốt nghiệp với mức lương bình quân khoảng 8,3 triệu đồng/người/tháng, 100% sinh viên có cơ hội làm việc ở FPT sau khi tốt nghiệp; 19% cựu sinh viên làm việc tại nước ngoài (số liệu năm 2017).`;
+  const { id = "" } = useParams();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+  const isInWishlist = useAppSelector((state) => selectWishlistItem(state, parseInt(id)))
+  const userInfo = useAppSelector(selectUserInfo)
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-  const majors = [
-    {
-      id: 106,
-      name: "Kinh tế",
-      code: "7310101",
-      description: null,
-    },
-    {
-      id: 86,
-      name: "Ngôn ngữ Anh",
-      code: "7220201",
-      description: null,
-    },
-    {
-      id: 88,
-      name: "Ngôn ngữ Pháp",
-      code: "7220203",
-      description: null,
-    },
-    {
-      id: 89,
-      name: "Ngôn ngữ Trung Quốc",
-      code: "7220204",
-      description: null,
-    },
-    {
-      id: 90,
-      name: "Ngôn ngữ Đức",
-      code: "7220205",
-      description: null,
-    },
-    {
-      id: 94,
-      name: "Ngôn ngữ Nhật",
-      code: "7220209",
-      description: null,
-    },
-    {
-      id: 95,
-      name: "Ngôn ngữ Hàn Quốc",
-      code: "7220210",
-      description: null,
-    },
-    {
-      id: 145,
-      name: "Marketing",
-      code: "7340115",
-      description: null,
-    },
-    {
-      id: 188,
-      name: "Khoa học dữ liệu",
-      code: "7460108",
-      description: "Có hiệu lực áp dụng từ ngày 22/7/2022. Bổ sung ngành mới.",
-    },
-    {
-      id: 193,
-      name: "Khoa học máy tính",
-      code: "7480101",
-      description: null,
-    },
-    {
-      id: 195,
-      name: "Kỹ thuật phần mềm",
-      code: "7480103",
-      description: null,
-    },
-    {
-      id: 196,
-      name: "Hệ thống thông tin",
-      code: "7480104",
-      description: null,
-    },
-    {
-      id: 197,
-      name: "Kỹ thuật máy tính",
-      code: "7480106",
-      description: null,
-    },
-    {
-      id: 198,
-      name: "Trí tuệ nhân tạo",
-      code: "7480107",
-      description: "Có hiệu lực áp dụng từ ngày 22/7/2022. Bổ sung ngành mới.",
-    },
-    {
-      id: 200,
-      name: "Công nghệ thông tin",
-      code: "7480201",
-      description: null,
-    },
-    {
-      id: 201,
-      name: "An toàn thông tin",
-      code: "7480202",
-      description: null,
-    },
-    {
-      id: 214,
-      name: "Công nghệ kỹ thuật điện, điện tử",
-      code: "7510301",
-      description: null,
-    },
-    {
-      id: 215,
-      name: "Công nghệ kỹ thuật điện tử - viễn thông",
-      code: "7510302",
-      description: null,
-    },
-  ];
-
-  // const [page, setPage] = useState(1);
-  // const [totalPage, setTotalPage] = useState<number>(1);
-  // const [asc, setAsc] = useState(false);
-  // const [searchTerm, setSearchTerm] = useState("");
   const [display, setDisplay] = useState<
     undefined | "admission-details" | "training-programs" | "majors"
   >();
-  const { id } = useParams();
   const listAdmission = useGetAdmissionsQuery({
     page: 1,
     search: "",
@@ -181,23 +70,27 @@ const School = () => {
   const idd = isAdmissionPlans?.length ? isAdmissionPlans[0].id : "";
   const institution = useGetInstitutionQuery(id!);
   const { data, isLoading } = useGetAdmissionDetailsQuery(idd?.toString()!);
-  console.log(isAdmissionPlans);
-  console.log(idd);
-  console.log(listAdmission);
 
-  const [searchKeyword, setSearchKeyword] = useState("");
   const handleSearchInputChange = (e: any) => {
     setSearchKeyword(e.target.value);
   };
   const filteredAdmissionMajors = data?.admissionMajors.filter((major) =>
     major.name.toLowerCase().includes(searchKeyword.toLowerCase())
   );
+
+  const handleAddToWishlist = (id: number) => {
+    if (!userInfo) {
+      setOpen(true)
+      return;
+    }
+    dispatch(addToWishList(id))
+  }
   return (
     <section className="border rounded overflow-hidden my-2">
       <img
         src={
           institutionBanner[
-            institution.data?.code as keyof typeof institutionBanner
+          institution.data?.code as keyof typeof institutionBanner
           ]
         }
         className="w-full h-[10rem] object-cover"
@@ -222,9 +115,28 @@ const School = () => {
                 className="group-hover:fill-sky-600 text-accent"
               />
               <span className="group-hover:text-accent group-hover:font-semibold">
-                Add to My List
+                Thêm vào Wishlist
               </span>
             </button> */}
+            <button
+              className="flex items-center gap-1 group text-gray-500 pt-2 text-lg"
+              onClick={() => handleAddToWishlist(parseInt(id))}
+            >
+              {
+                isInWishlist ?
+                  <BookmarkCheck
+                    size={30}
+                    className="fill-accent text-white"
+                  />
+                  : <Bookmark
+                    size={24}
+                    className="group-hover:fill-accent text-accent"
+                  />
+              }
+              <span className="group-hover:text-accent group-hover:font-semibold">
+                {isInWishlist ? 'Trong Wishlist' : 'Thêm vào Wishlist'}
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -232,8 +144,8 @@ const School = () => {
         <Tabs defaultValue="details" className="pb-4">
           <TabsList className="flex gap-2">
             <TabsTrigger value="details">Thông tin chi tiết</TabsTrigger>
-            <TabsTrigger value="programs">Chương trình học</TabsTrigger>
             <TabsTrigger value="methods">Đề án tuyển sinh</TabsTrigger>
+            <TabsTrigger value="programs">Chương trình học</TabsTrigger>
           </TabsList>
           <TabsContent value="details">
             <Accordion
@@ -246,8 +158,8 @@ const School = () => {
                   <div className="whitespace-pre-wrap text-base">
                     {
                       institutionFullIntroductions[
-                        institution.data
-                          ?.code as keyof typeof institutionFullIntroductions
+                      institution.data
+                        ?.code as keyof typeof institutionFullIntroductions
                       ]
                     }
                   </div>
@@ -457,8 +369,7 @@ const School = () => {
                                     >
                                       <AccordionTrigger className="text-base px-3 py-1 bg-slate-200 border-black cursor-pointer">
                                         {method.name ||
-                                          `Phương thức tuyển sinh ${
-                                            methodIndex + 1
+                                          `Phương thức tuyển sinh ${methodIndex + 1
                                           }`}
                                       </AccordionTrigger>
                                       <AccordionContent className="pl-5 pt-1 pb-1">
@@ -589,6 +500,11 @@ const School = () => {
           </TabsContent>
         </Tabs>
       </div>
+      <LoginAlertModel
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={() => navigate('/signin')}
+      />
     </section>
   );
 };

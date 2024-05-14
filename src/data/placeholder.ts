@@ -61,3 +61,115 @@ Trường không chỉ chú trọng vào việc truyền đạt kiến thức m�
   YDS: `Đại học Y Dược Tp.Hồ Chí Minh là một trong những cơ sở giáo dục hàng đầu tại Việt Nam, nơi đào tạo ra những bác sĩ và nhà nghiên cứu y tế hàng đầu. Với các chương trình đào tạo tiên tiến và môi trường học tập hiện đại, YHB cam kết mang đến cho sinh viên sự phát triển toàn diện và cơ hội nghề nghiệp sáng tạo.
 Trường không chỉ chú trọng vào việc truyền đạt kiến thức mà còn tạo điều kiện cho sinh viên thực hành và làm việc tại các bệnh viện và tổ chức y tế, từ đó phát triển kỹ năng thực tiễn và xây dựng mối quan hệ chuyên ngành. Đồng thời, YHB cũng mở rộng quan hệ hợp tác với các tổ chức quốc tế, tạo cơ hội cho sinh viên tham gia vào các chương trình trao đổi văn hóa và học thuật.`,
 };
+
+
+export const majors = [
+  {
+    id: 106,
+    name: "Kinh tế",
+    code: "7310101",
+    description: null,
+  },
+  {
+    id: 86,
+    name: "Ngôn ngữ Anh",
+    code: "7220201",
+    description: null,
+  },
+  {
+    id: 88,
+    name: "Ngôn ngữ Pháp",
+    code: "7220203",
+    description: null,
+  },
+  {
+    id: 89,
+    name: "Ngôn ngữ Trung Quốc",
+    code: "7220204",
+    description: null,
+  },
+  {
+    id: 90,
+    name: "Ngôn ngữ Đức",
+    code: "7220205",
+    description: null,
+  },
+  {
+    id: 94,
+    name: "Ngôn ngữ Nhật",
+    code: "7220209",
+    description: null,
+  },
+  {
+    id: 95,
+    name: "Ngôn ngữ Hàn Quốc",
+    code: "7220210",
+    description: null,
+  },
+  {
+    id: 145,
+    name: "Marketing",
+    code: "7340115",
+    description: null,
+  },
+  {
+    id: 188,
+    name: "Khoa học dữ liệu",
+    code: "7460108",
+    description: "Có hiệu lực áp dụng từ ngày 22/7/2022. Bổ sung ngành mới.",
+  },
+  {
+    id: 193,
+    name: "Khoa học máy tính",
+    code: "7480101",
+    description: null,
+  },
+  {
+    id: 195,
+    name: "Kỹ thuật phần mềm",
+    code: "7480103",
+    description: null,
+  },
+  {
+    id: 196,
+    name: "Hệ thống thông tin",
+    code: "7480104",
+    description: null,
+  },
+  {
+    id: 197,
+    name: "Kỹ thuật máy tính",
+    code: "7480106",
+    description: null,
+  },
+  {
+    id: 198,
+    name: "Trí tuệ nhân tạo",
+    code: "7480107",
+    description: "Có hiệu lực áp dụng từ ngày 22/7/2022. Bổ sung ngành mới.",
+  },
+  {
+    id: 200,
+    name: "Công nghệ thông tin",
+    code: "7480201",
+    description: null,
+  },
+  {
+    id: 201,
+    name: "An toàn thông tin",
+    code: "7480202",
+    description: null,
+  },
+  {
+    id: 214,
+    name: "Công nghệ kỹ thuật điện, điện tử",
+    code: "7510301",
+    description: null,
+  },
+  {
+    id: 215,
+    name: "Công nghệ kỹ thuật điện tử - viễn thông",
+    code: "7510302",
+    description: null,
+  },
+];

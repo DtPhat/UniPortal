@@ -24,6 +24,7 @@ import {
   BookOpen,
   BookOpenText,
   ChevronDown,
+  ClipboardList,
   LogOut,
   Settings,
   SquareUser,
@@ -31,6 +32,7 @@ import {
 } from "lucide-react";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "../ui/use-toast";
 
 const UserMenu = () => {
   const dispatch = useAppDispatch();
@@ -61,19 +63,27 @@ const UserMenu = () => {
         <DropdownMenuLabel>Tài khoản của tôi</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={()=> navigate('/profile')}>
+          <DropdownMenuItem onClick={() => navigate('/profile')}>
             <UserRound className="w-4 h-4 text-black/70" />
             <div>Hồ sơ</div>
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/wishlist')}>
+            <ClipboardList className="w-4 h-4 text-black/70" />
+            <div>Wishlist</div>
+          </DropdownMenuItem>
           {userInfo?.role == roles.STUDENT && (
-            <DropdownMenuItem onClick={()=> navigate('/transcript')}>
+            <DropdownMenuItem onClick={() => navigate('/transcript')}>
               <BookOpen className="w-4 h-4 text-black/70" />
               <div>Bảng điểm</div>
             </DropdownMenuItem>
           )}
           <DropdownMenuItem>
             <Settings className="w-4 h-4 text-black/70" />
-            Thiết lập
+            <div onClick={() => toast({
+              variant: "destructive",
+              title: "Feature is under development.",
+              description: "Please try later!",
+            })} >Cài đặt</div>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

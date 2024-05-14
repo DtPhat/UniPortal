@@ -9,7 +9,7 @@ import type {
 } from '@reduxjs/toolkit/query'
 import { toast } from '@/components/ui/use-toast'
 
-const BASE_URL = 'https://18.140.72.139'
+const BASE_URL = 'https:localhost:8080'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -42,7 +42,14 @@ const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 1 })
 
 export const api = createApi({
   baseQuery: baseQueryWithRetry,
-  tagTypes: ['User', 'Institution', 'Admission', 'Major', 'Highschool', 'Student'],
+  tagTypes: [
+    'User',
+    'Institution',
+    'Admission',
+    'Major',
+    'Highschool',
+    'Student'
+  ],
   endpoints: () => ({}),
 })
 

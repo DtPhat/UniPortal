@@ -74,7 +74,7 @@ const Header = ({ isSchoolPage }: Props) => {
                     variant="outline"
                     role="combobox"
                     aria-expanded={openSchool}
-                    className="w-64 justify-between"
+                    className="w-80 justify-between"
                   >
                     {value
                       ? schools.find((school) => school.value === value)?.label
@@ -82,7 +82,7 @@ const Header = ({ isSchoolPage }: Props) => {
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-64 p-0">
+                <PopoverContent className="w-80 p-0">
                   <Command>
                     <CommandInput
                       placeholder="Search school..."
@@ -122,25 +122,25 @@ const Header = ({ isSchoolPage }: Props) => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
                     className="text-base"
-                    onClick={() => navigate("/admission-info")}
+                    onClick={() => navigate("/admission-info/methods")}
                   >
                     Thông tin tuyển sinh
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="flex flex-col px-4 pb-2 md:w-[25rem] lg:w-[28rem] list-none divide-y gap-2">
-                    <li className="font-semibold text-gray-700 hover:text-accent pt-2">
+                      <li className="font-semibold text-gray-700 hover:text-accent pt-2">
                         <Link to='/admission-info/major-codes'>
                           Danh mục toàn bộ mã ngành tương ứng với các ngành
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to='/admission-info/subject-groups'>
-                          Danh sách các khối thi và tổ hợp xét tuyển đại học
+                        <Link to='/admission-info/methods'>
+                          Tổng hợp về các phương thức xét tuyển
                         </Link>
                       </li>
                       <li className="font-semibold text-gray-700 hover:text-accent pt-2">
-                        <Link to='/admission-info'>
-                          Tổng hợp về các phương thức xét tuyển
+                        <Link to='/admission-info/subject-groups'>
+                          Danh sách các khối thi và tổ hợp xét tuyển đại học
                         </Link>
                       </li>
                     </ul>
