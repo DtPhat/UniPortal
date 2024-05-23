@@ -1,15 +1,14 @@
-import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
-import { RootState } from '../store'
-import { useAppSelector } from '../hooks'
-import { logout, selectUserToken } from '@/features/auth/authSlice'
+import { toast } from '@/components/ui/use-toast'
+import { logout } from '@/features/auth/authSlice'
 import type {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query'
-import { toast } from '@/components/ui/use-toast'
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
+import { RootState } from '../store'
 
-const BASE_URL = 'https:localhost:8080'
+const BASE_URL = 'https://springportal.onrender.com'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -30,6 +29,7 @@ const baseQueryWithReauth: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions)
   if (result.error?.status === 403 || result.error?.status === 401) {
     toast({
+      variant: "destructive",
       title: "Unauthorized",
       description: "Please login again to continue",
     })
