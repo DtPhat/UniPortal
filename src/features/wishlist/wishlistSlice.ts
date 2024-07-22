@@ -21,7 +21,7 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishList: (state, action: PayloadAction<number>) => {
-      if (!userInfo) return;
+      if (!userInfo) return;      
       state.wishlist = state.wishlist.includes(action.payload)
         ? state.wishlist.filter(id => id !== action.payload)
         : [...state.wishlist, action.payload]

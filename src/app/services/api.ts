@@ -8,7 +8,7 @@ import type {
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../store'
 
-const BASE_URL = 'https://springportal.onrender.com'
+const BASE_URL = 'https://spring-portal.azurewebsites.net'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,

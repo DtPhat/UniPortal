@@ -182,7 +182,7 @@ const Signup = () => {
                 {
                   googleLoginResponse.isLoading || loginMutationResponse.isLoading || registerMutationResponse.isLoading?
                     <ReloadIcon className="h-5 w-5 animate-spin" />
-                    : <span>Đăng nhập</span>
+                    : <span>Đăng ký</span>
                 }
               </Button>
               <div className="text-center justify-center p-4">
@@ -212,7 +212,7 @@ const Signup = () => {
                 <div className="mt-2 text-white-300">
                   Đã có tài khoản?
                   <Link to="/signin" className="ml-4 text-accent font-semibold">
-                    Đăng ký
+                    Đăng nhập
                   </Link>
                 </div>
               </div>

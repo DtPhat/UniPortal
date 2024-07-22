@@ -13,8 +13,8 @@ import { auth, provider } from "@/firebase/config";
 import { roles } from "@/app/constants";
 import { toast } from "@/components/ui/use-toast";
 const Signin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@uniportal.com");
+  const [password, setPassword] = useState("3c6a8c7cf641a2275b0c372052ed3945");
   const [login, basicLoginResponse] = useLoginMutation()
   const [loginGoolge, googleLoginResponse] = useLoginGoogleMutation()
   const dispatch = useAppDispatch()
@@ -83,7 +83,6 @@ const Signin = () => {
               <Input
                 type="email"
                 placeholder="John@gmail.com"
-                defaultValue={'admin@uniportal.com'}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="block w-full px-3 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-4"
@@ -91,8 +90,7 @@ const Signin = () => {
               <label className="font-semibold mb-2">Mật khẩu:</label>
               <Input
                 type="password"
-                placeholder=""
-                defaultValue={'3c6a8c7cf641a2275b0c372052ed3945'}
+                placeholder="Your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="block w-full px-3 py-3 border border-gray-300 focus:ring-white-500 focus:border-white-500 mb-6"
@@ -114,7 +112,7 @@ const Signin = () => {
                 {
                   basicLoginResponse.isLoading || googleLoginResponse.isLoading ?
                     <ReloadIcon className="h-5 w-5 animate-spin" />
-                    : <span>Đăng ký</span>
+                    : <span>Đăng nhập</span>
                 }
               </Button>
               <div className="mt-2 text-red-700 whitespace-pre px-2">{serverReponse || ''}</div>
@@ -141,7 +139,7 @@ const Signin = () => {
                 <div className="mt-2 text-white-300">
                   Không có tài khoản
                   <Link to="/signup" className="ml-4 text-accent font-semibold">
-                    Đăng nhập
+                    Đăng ký
                   </Link>
                 </div>
               </div>
